@@ -131,12 +131,12 @@ int getInput(int items){
 
     while(true){
         scanf("%d%*c", &input);
+        fflush(stdin);
         if(input > 0 || input < items){
             return input;
         }
         else{
             printf("Ogiltig inmatning, försök igen: \n\n");
-            fflush(stdin);
         }
     }
 }
