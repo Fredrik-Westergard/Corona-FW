@@ -1,29 +1,115 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <math.h>
 
+struct date{
+    int day;
+    int month;
+    int year;
+};
+
+//fuction to check wether a date is valid
+bool checkDate(struct date d){
+    //checks if the month is valid
+    if(d.month > 0 && d.month < 13){
+        //checks if it's february
+        if(d.month == 2){
+            //checks if it's a leap year
+            if(((d.year%4==0) && (d.year%100 != 0)) || (d.year%400 == 0)){
+                //checks if it's between feb 1-29
+                if(d.day > 0 && d.day < 30){
+                    return true;
+                }
+            }
+            //checks if it's between feb 1-28
+            else if(d.day > 0 && d.day < 29){
+                return true;
+            }         
+        }
+        //checks if it's a month with 31 days in it
+        else if(d.month ==  4 || d.month == 6 || d.month == 9 || d.month == 11){
+            //checks if it's between 1-31st
+            if(d.day > 0 && d.day < 31){
+                return true;
+            }
+        }
+        //otherwise it checks if it's between 1 and 31
+        else if(d.day > 0 && d.day < 32){
+            return true;
+        }      
+    }
+    return false;
+}
+//function to input new opening code
 void newCode(){
-    printf("new code added\n");
+    unsigned int code;  //unsigned because it can't be negativce
+    bool good = false;
+    printf("Mata in Öppningskoden på 8 siffror:\n");
+    while(!good){
+        scanf("%d%*c", &code);
+        fflush(stdin);
+        //floor returns the largest value that's less than or equal to the parameter,
+        //log10 returns the common log in base 10 of the parameter
+        //abs returns the absolute value
+        //checks wether code has 8 digits
+        if(floor(log10(abs(code)))+1 == 8){
+            good = true;
+        }
+        else{
+            printf("Ogiltig inmatning, försök igen: \n\n");
+        }
+    }
+    printf("öppningskod: %8d\n", code);
+
+    printf("Ny kod tillagd.\n");
     return;
 }
-
+//funtion to print the codes stored
 void printCodes(){
-    printf("codes\n");
+    printf("koder.\n");
     return;
 }
-
+//function to add a new phone
 void newPhone(){
-    printf("new phone added\n");
+    unsigned int id;
+    bool good = false;
+    struct date d;
+
+    printf("Mata in identifikationskod på 6 siffror: \n");
+    while(!good){
+        scanf("%d%*c", &id);
+        fflush(stdin);
+        if(floor(log10(abs(id)))+1 == 6){
+            good = true;
+        }
+        else{
+            printf("Ogiltig inmatning, försök igen: \n\n");
+        }
+    }
+    printf("Mata in datum i YYYY-MM-DD format\n");
+    while(good){
+        scanf("%d-%d-%d%*c", &d.year, &d.month, &d.day);
+        fflush(stdin);
+        if(checkDate(d)){
+            good = false;
+        }
+        else{
+            printf("Ogiltig inmatning, försök igen: \n\n");
+        }
+    }
+    printf("id: %6d\ndatum: %04d-%02d-%02d\n", id, d.year, d.month, d.day);
+    printf("Ny telefon tillagd.\n");
     return;
 }
 
 void printPhones(){
-    printf("phones\n");
+    printf("telefoner.\n");
     return;
 }
 
 void sendAlarm(){
-    printf("alarm sent\n");
+    printf("Alarm skickat.\n");
     return;
 }
 
@@ -74,7 +160,6 @@ int printMenues(int menu){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny öppningskod   |\n");
         printf("\t#....................#\n\n");
-        printf("Mata in öppningskod: \n");
         newCode();
         printf("1. Bakåt.\n\n");
         num = 1;
@@ -92,7 +177,7 @@ int printMenues(int menu){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny Nära Telefon   |\n");
         printf("\t#.....................#\n\n");
-        printf("Mata in ny Nära Telefon: \n");
+        printf("Mata in ny nära telefon: \n");
         newPhone();
         printf("1. Bakåt.\n\n");
         num = 1;
