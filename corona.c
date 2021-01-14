@@ -2,10 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-int goBack(){
-
-}
-
 void newCode(){
     printf("new code added\n");
     return;
@@ -74,9 +70,6 @@ int printMenues(int menu){
         printf("2. Bakåt.\n\n");
         num = 2;
     }
-    else if(menu == 4){
-        exit(0);
-    }
     else if(menu == 11){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny öppningskod   |\n");
@@ -132,7 +125,7 @@ int getInput(int items){
     while(true){
         scanf("%d%*c", &input);
         fflush(stdin);
-        if(input > 0 || input < items){
+        if(input > 0 && input < items+1){
             return input;
         }
         else{
@@ -148,7 +141,16 @@ int main(int argc, char const *argv[]){
     int menu = getInput(size);
 
     while(running){
-        number = (number*10)+menu;
+        if(size == menu){
+            if(number == 0){
+                exit(0);
+            }
+            number = number/10;
+        }
+        else{
+            number = (number*10)+menu;
+        }
+        printf("%d\n", number);
         size = printMenues(number);
         menu = getInput(size);
     }
