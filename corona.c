@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 struct date{
     int day;
@@ -11,40 +12,56 @@ struct date{
 
 //fuction to check wether a date is valid
 bool checkDate(struct date d){
-    //checks if the month is valid
-    if(d.month > 0 && d.month < 13){
-        //checks if it's february
-        if(d.month == 2){
-            //checks if it's a leap year
-            if(((d.year%4==0) && (d.year%100 != 0)) || (d.year%400 == 0)){
-                //checks if it's between feb 1-29
-                if(d.day > 0 && d.day < 30){
+    //epoch time variable
+    time_t t = time(NULL);
+    //time struture for getting day/month/year
+    struct tm tm = *localtime(&t);
+
+    //checks if the year is between 1970 and current year
+    if(d.year >= 1970 && d.year <= tm.tm_year+1900){
+        //checks if it's the current year + month and if the date is under or equal to todays date
+        if((d.year == tm.tm_year+1900 && d.month == tm.tm_mon+1) && (d.day > 0 && d.day <= tm.tm_mday)){
+            return true;
+        }
+        //checks if it's a valid month
+        if(d.month > 0 && d.month < 13){
+            //checks if it's current year, if it's current month and the day is after today or if the month is after current month
+            if((d.year == tm.tm_year+1900)&&((d.month == tm.tm_mon+1 && d.day > tm.tm_mday)||(d.month > tm.tm_mon+1))){
+                return false;
+            }
+            //checks if it's february
+            if(d.month == 2){
+                //checks if it's a leap year
+                if(((d.year%4==0) && (d.year%100 != 0)) || (d.year%400 == 0)){
+                    //checks if it's between feb 1-29
+                    if(d.day > 0 && d.day < 30){
+                        return true;
+                    }
+                }
+                //checks if it's between feb 1-28
+                else if(d.day > 0 && d.day < 29){
+                    return true;
+                }         
+            }
+            //checks if it's a month with 31 days in it
+            else if(d.month ==  4 || d.month == 6 || d.month == 9 || d.month == 11){
+                //checks if it's between 1-31st
+                if(d.day > 0 && d.day < 31){
                     return true;
                 }
             }
-            //checks if it's between feb 1-28
-            else if(d.day > 0 && d.day < 29){
+            //otherwise it checks if it's between 1 and 31
+            else if(d.day > 0 && d.day < 32){
                 return true;
-            }         
+            }      
         }
-        //checks if it's a month with 31 days in it
-        else if(d.month ==  4 || d.month == 6 || d.month == 9 || d.month == 11){
-            //checks if it's between 1-31st
-            if(d.day > 0 && d.day < 31){
-                return true;
-            }
-        }
-        //otherwise it checks if it's between 1 and 31
-        else if(d.day > 0 && d.day < 32){
-            return true;
-        }      
     }
     return false;
 }
 //function to input new opening code
 void newCode(){
     unsigned int code;  //unsigned because it can't be negativce
-    bool good = false;
+    bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
     while(!good){
         scanf("%d%*c", &code);
@@ -72,14 +89,18 @@ void printCodes(){
 }
 //function to add a new phone
 void newPhone(){
-    unsigned int id;
+    unsigned int id;    //unsigned because it can't be negative
     bool good = false;
-    struct date d;
+    struct date d;      //date structure
 
     printf("Mata in identifikationskod på 6 siffror: \n");
     while(!good){
         scanf("%d%*c", &id);
         fflush(stdin);
+        //floor returns the largest value that's less than or equal to the parameter,
+        //log10 returns the common log in base 10 of the parameter
+        //abs returns the absolute value
+        //checks wether code has 6 digits
         if(floor(log10(abs(id)))+1 == 6){
             good = true;
         }
@@ -91,6 +112,7 @@ void newPhone(){
     while(good){
         scanf("%d-%d-%d%*c", &d.year, &d.month, &d.day);
         fflush(stdin);
+        //checks if the date is valid
         if(checkDate(d)){
             good = false;
         }
@@ -98,7 +120,7 @@ void newPhone(){
             printf("Ogiltig inmatning, försök igen: \n\n");
         }
     }
-    printf("id: %6d\ndatum: %04d-%02d-%02d\n", id, d.year, d.month, d.day);
+    printf("\nid: %6d\ndatum: %04d-%02d-%02d\n\n", id, d.year, d.month, d.day);
     printf("Ny telefon tillagd.\n");
     return;
 }
@@ -116,7 +138,11 @@ void sendAlarm(){
 
 //Prints the menues
 int printMenues(int menu){
+    //the number of choices in the menu
     int num = 0;
+    
+    //checks if the menu number corresponds with the choice number
+    //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 
         menu == 111 || menu == 121 || menu == 211 || menu == 221 || menu == 311){
 
@@ -204,6 +230,7 @@ int printMenues(int menu){
     return num;
 }
 
+//gets and checks if the menu input is valid
 int getInput(int items){
     int input;
 
@@ -219,24 +246,36 @@ int getInput(int items){
     }
 }
 
+//main function
 int main(int argc, char const *argv[]){
     bool running = true;
-    int number = 0;
-    int size = printMenues(0);
-    int menu = getInput(size);
+    int number = 0;             //the level it's on
+    int size = printMenues(0);  //how many menu choices there are
+    int menu = getInput(size);  //the chosen menu
 
+    //menu loop
     while(running){
+        //if the user chose "bakåt" or "avsluta", 
+        //they have to be the last choice
         if(size == menu){
+            //if the user chose "avsluta"
             if(number == 0){
                 exit(0);
             }
+            //go back one step
             number = number/10;
         }
         else{
+            //go forward one step
+            //works like this:
+            //(the level * the number of available choices) + the chosen menu = the menus number
+            //example: the level = 1, the number of available choices = 10 (only 4 used currently but there is space for more)
+            //the chocen menu = 2, becomes (1*10)+2 = 12. open menu 12
             number = (number*10)+menu;
         }
-        printf("%d\n", number);
+        //prints the menu and gets the number of menu choices
         size = printMenues(number);
+        //gets the menu item from user
         menu = getInput(size);
     }
 
