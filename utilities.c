@@ -65,6 +65,7 @@ void newCode(){
         //log10 returns the common log in base 10 of the parameter
         //abs returns the absolute value
         //checks wether code has 8 digits
+        //would be easier if these were strings instead
         if(floor(log10(abs(code)))+1 == 8){
             good = true;
         }
