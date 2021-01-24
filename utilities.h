@@ -23,4 +23,6 @@ int printMenues(int menu);
 
 int getInput(int items);
 
+void clean_stdin(void);
+
 #endif

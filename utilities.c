@@ -59,8 +59,8 @@ void newCode(){
     bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
     while(!good){
-        scanf("%d%*c", &code);
-        fflush(stdin);
+        scanf("%d", &code);
+        clean_stdin();
         //floor returns the largest value that's less than or equal to the parameter,
         //log10 returns the common log in base 10 of the parameter
         //abs returns the absolute value
@@ -91,8 +91,8 @@ void newPhone(){
 
     printf("Mata in identifikationskod på 6 siffror: \n");
     while(!good){
-        scanf("%d%*c", &id);
-        fflush(stdin);
+        scanf("%d", &id);
+        clean_stdin();
         //floor returns the largest value that's less than or equal to the parameter,
         //log10 returns the common log in base 10 of the parameter
         //abs returns the absolute value
@@ -106,8 +106,8 @@ void newPhone(){
     }
     printf("Mata in datum i YYYY-MM-DD format\n");
     while(good){
-        scanf("%d-%d-%d%*c", &d.year, &d.month, &d.day);
-        fflush(stdin);
+        scanf("%d-%d-%d", &d.year, &d.month, &d.day);
+        clean_stdin();
         //checks if the date is valid
         if(checkDate(d)){
             good = false;
@@ -225,19 +225,33 @@ int printMenues(int menu){
 
     return num;
 }
+//function taken from stackoverflow, fflush did not work on linux for some reason.
+//this does what fflush is supposed to do.
+void clean_stdin(void){
+    int c;
+    do {
+        c = getchar();
+    } while (c != '\n' && c != EOF);
+}
 
 //gets and checks if the menu input is valid
 int getInput(int items){
-    int input;
-
     while(true){
-        scanf("%d%*c", &input);
-        fflush(stdin);
-        if(input > 0 && input < items+1){
-            return input;
+        int input;
+
+        if(scanf("%d", &input) == 1){
+            if(input > 0 && input < items+1){
+                return input;
+            }
+            else{
+                printf("Ogiltig inmatning, försök igen: \n\n");
+            }
         }
         else{
             printf("Ogiltig inmatning, försök igen: \n\n");
         }
+        clean_stdin();
+
+        
     }
 }
