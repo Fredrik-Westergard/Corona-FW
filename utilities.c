@@ -5,7 +5,7 @@
 #include <time.h>
 #include "utilities.h"
 
-//fuction to check wether a date is valid
+//fuction to check whether a date is valid
 bool checkDate(struct date d){
     //epoch time variable
     time_t t = time(NULL);
@@ -78,7 +78,7 @@ void newCode(){
     printf("Ny kod tillagd.\n");
     return;
 }
-//funtion to print the codes stored
+//funtion to print the stored codes
 void printCodes(){
     printf("koder.\n");
     return;
@@ -121,18 +121,20 @@ void newPhone(){
     return;
 }
 
+//function to print the stored phones
 void printPhones(){
     printf("telefoner.\n");
     return;
 }
 
+//function to send an alarm
 void sendAlarm(){
     printf("Alarm skickat.\n");
     return;
 }
 
 
-//Prints the menues
+//Prints the menus
 int printMenues(int menu){
     //the number of choices in the menu
     int num = 0;
