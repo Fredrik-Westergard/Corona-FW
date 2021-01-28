@@ -27,7 +27,7 @@ bool checkDate(struct date d){
             //checks if it's february
             if(d.month == 2){
                 //checks if it's a leap year
-                if(((d.year%4==0) && (d.year%100 != 0)) || (d.year%400 == 0)){
+                if(((d.year%4==0) && ((d.year%100 != 0)) || (d.year%400 == 0))){
                     //checks if it's between feb 1-29
                     if(d.day > 0 && d.day < 30){
                         return true;
