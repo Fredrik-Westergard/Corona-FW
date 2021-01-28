@@ -5,7 +5,7 @@
 
 //main function
 int main(int argc, char const *argv[]){
-    bool running = true;
+    bool running = true;        //variable used to check if the menu loop is running
     int number = 0;             //the level it's on
     int size = printMenues(0);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu

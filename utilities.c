@@ -254,6 +254,5 @@ int getInput(int items){
         }
         clean_stdin();
 
-        
     }
 }
