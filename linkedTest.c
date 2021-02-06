@@ -42,7 +42,7 @@ int main(int argc, char const *argv[])
     d6.year = 1994;
     addToList(l, 666666, d6);
     
-    printList(l->head);
+    printList(l);
 
     removeFromList(l, 0);
 
@@ -52,7 +52,7 @@ int main(int argc, char const *argv[])
 
 
     printf("\n");
-    printList(l->head);
+    printList(l);
 
     destroyList(l);
 
