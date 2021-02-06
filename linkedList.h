@@ -23,9 +23,9 @@ struct node* getIndexRecursive(struct node* n, int index);
 
 struct node* getIndex(list* l, int index);
 
-void removeFromList(list* l, int index, int length);
+void removeFromList(list* l, int index);
 
-void destroyList(list* l, int length);
+void destroyList(list* l);
 
 void printList(list* l);
 

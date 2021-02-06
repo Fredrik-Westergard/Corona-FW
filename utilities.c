@@ -37,12 +37,24 @@ void printCodes(){
     return;
 }
 
-int removeTooOld(list* l, int* length){
-    
+void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
+    if(n == NULL){
+        return;
+    }
+    if(compareDates(tooOld, n->d) > 0){
+        removeFromList(l, index);
+    }
+    removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+1);
+}
+
+void removeTooOld(list* l){
+    if(l->head != NULL){
+        removeOldRecursive(l,l->head, getDateNumBefore(getTodaysDate(),21), 0);
+    }
 }
 
 //function to add a new phone
-void newPhone(list* l, int* length){
+void newPhone(list* l){
     unsigned int id;    //unsigned because it can't be negative
     bool good = false;
     date d;      //date structure
@@ -75,7 +87,7 @@ void newPhone(list* l, int* length){
         }
     }
     addToList(l, id, d);
-    length = removeTooOld(l,length);
+    removeTooOld(l);
     printf("\nid: %6d\ndatum: ", id);
     printDateISO(d);
     printf("\n\n");
@@ -97,7 +109,7 @@ void sendAlarm(){
 
 
 //Prints the menues
-int printMenues(int menu, list* l, int* length){
+int printMenues(int menu, list* l){
     //the number of choices in the menu
     int num = 0;
     
@@ -164,8 +176,7 @@ int printMenues(int menu, list* l, int* length){
         printf("\t|   Ny Nära Telefon   |\n");
         printf("\t#.....................#\n\n");
         printf("Mata in ny nära telefon: \n");
-        newPhone(l, length);
-        (*length)++;
+        newPhone(l);
         printf("1. Bakåt.\n\n");
         num = 1;
     }

@@ -36,8 +36,8 @@ struct node* getIndex(list* l, int index){
     return getIndexRecursive(l->head, index);
 }
 
-void removeFromList(list* l, int index, int length){
-    if(length > 0){
+void removeFromList(list* l, int index){
+    if(l->head != NULL){
         if(index == 0){
             struct node* n = l->head;
             l->head = l->head->next;
@@ -52,17 +52,17 @@ void removeFromList(list* l, int index, int length){
         }
     }
     else{
-        printf("List Error: lenght is 0\n");
+        printf("List Error: length is 0\n");
     }
 }
 
-void destroyList(list* l, int length){
-    if(length == 0){
+void destroyList(list* l){
+    if(l->head == NULL){
         free(l);
         return;
     }
-    removeFromList(l, length-1, length);
-    destroyList(l, length-1);
+    removeFromList(l,0);
+    destroyList(l);
 }
 
 void printList(list* l){

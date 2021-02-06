@@ -9,8 +9,7 @@ int main(int argc, char const *argv[]){
     bool running = true;
     int number = 0;             //the level it's on
     list* l = createList();
-    int length = 0;
-    int size = printMenues(0, l, &length);  //how many menu choices there are
+    int size = printMenues(0, l);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
     
@@ -36,10 +35,10 @@ int main(int argc, char const *argv[]){
             number = (number*10)+menu;
         }
         //prints the menu and gets the number of menu choices
-        size = printMenues(number, l, &length);
+        size = printMenues(number, l);
         //gets the menu item from user
         menu = getInput(size);
     }
-    destroyList(l, length);
+    destroyList(l);
     return 0;
 }
