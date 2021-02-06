@@ -1,13 +1,5 @@
-#ifndef __UTILITIES_H__
-#define __UTILITIES_H__
-
-struct date{
-    int day;
-    int month;
-    int year;
-};
-
-bool checkDate(struct date d);
+#ifndef UTILITIES_H__
+#define UTILITIES_H__
 
 void newCode();
 

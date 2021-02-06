@@ -1,2 +1,2 @@
 all:
-	gcc main.c utilities.c -Wall -lm -o corona
+	gcc main.c utilities.c date.c -Wall -lm -o corona
