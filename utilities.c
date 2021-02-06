@@ -68,7 +68,9 @@ void newPhone(){
             printf("Ogiltig inmatning, försök igen: \n\n");
         }
     }
-    printf("\nid: %6d\ndatum: %04d-%02d-%02d\n\n", id, d.year, d.month, d.day);
+    printf("\nid: %6d\ndatum: ", id);
+    printDateISO(d);
+    printf("\n\n");
     printf("Ny telefon tillagd.\n");
     return;
 }

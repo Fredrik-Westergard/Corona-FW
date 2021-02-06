@@ -15,4 +15,13 @@ void printDateISO(date d);
 
 void printDateFI(date d);
 
+bool isLeapYear(date d);
+
+date getDayBefore(date d);
+
+date getDateNumBefore(date current, int num);
+
+int compareDates(date d1, date d2);
+
+
 #endif

@@ -60,3 +60,66 @@ void printDateISO(date d){
 void printDateFI(date d){
     printf("%02d-%02d-%04d", d.day, d.month, d.year);
 }
+
+bool isLeapYear(date d){
+    if((d.year%4 == 0)&&(d.year%100 != 0 || d.year%400 == 0)){
+        return true;
+    }
+    return false;
+}
+
+
+date getDayBefore(date d){
+    int days[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
+
+    d.day--;
+    if(d.day < 1){
+        d.month--;
+        if(d.month < 1){
+            d.month = 12;
+            d.year--;
+        }
+        d.day = days[d.month-1];
+        if(isLeapYear(d) && d.month == 2){
+            d.day++;
+        }
+    }
+    return d;
+
+}
+
+date getDateNumBefore(date current, int num){
+    if(num <= 0){
+        return current;
+    }
+    date new = getDateNumBefore(getDayBefore(current), num-1);
+    return new;
+}
+
+int compareDates(date d1, date d2){
+    if(d1.year == d2.year){
+        if(d1.month == d2.month){
+            if(d1.day == d2.day){
+                return 0;
+            }
+            else if(d1.day > d2.day){
+                return 1;
+            }
+            else{
+                return -1;
+            }
+        }
+        else if(d1.month > d2.month){
+            return 1;
+        }
+        else{
+            return -1;
+        }
+    }
+    else if(d1.year > d2.year){
+        return 1;
+    }
+    else{
+        return -1;
+    }
+}
