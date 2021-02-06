@@ -41,10 +41,12 @@ void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
     if(n == NULL){
         return;
     }
+    int i = 1;
     if(compareDates(tooOld, n->d) > 0){
         removeFromList(l, index);
+        i--;
     }
-    removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+1);
+    removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+i);
 }
 //function to remove old phones using removeOldRecursive()
 void removeTooOld(list* l){
@@ -106,11 +108,8 @@ void sendAlarm(){
     printf("Alarm skickat.\n");
     return;
 }
-//Prints the menues
-int printMenues(int menu, list* l){
-    //the number of choices in the menu
-    int num = 0;
-    
+//Prints the menus
+int printMenus(int menu, list* l){    
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 
@@ -123,7 +122,7 @@ int printMenues(int menu, list* l){
         printf("2. Mata in identifikationskod och datum för en nära telefon.\n");
         printf("3. Ta emot smittalarm.\n");
         printf("4. Avsluta\n\n");
-        num = 4;
+        return 4;
     }
     else if(menu == 1){
         printf("\t#''''''''''''''''''''''''#\n");
@@ -132,7 +131,7 @@ int printMenues(int menu, list* l){
         printf("1. Ny öppningskod.\n");
         printf("2. Visa öppningskoder.\n");
         printf("3. Bakåt.\n\n");
-        num = 3;
+        return 3;
     }
     else if(menu == 2){
         printf("\t#'''''''''''''''''''''''''''''''''''''''''#\n");
@@ -142,7 +141,7 @@ int printMenues(int menu, list* l){
         printf("1. Ny nära telefon.\n");
         printf("2. Visa telefoner.\n");
         printf("3. Bakåt.\n\n");
-        num = 3;
+        return 3;
     }
     else if(menu == 3){
         printf("\t#''''''''''''''''''''''''#\n");
@@ -150,7 +149,7 @@ int printMenues(int menu, list* l){
         printf("\t#........................#\n\n");
         printf("1. Nytt smittalarm.\n");
         printf("2. Bakåt.\n\n");
-        num = 2;
+        return 2;
     }
     else if(menu == 11){
         printf("\t#''''''''''''''''''''#\n");
@@ -158,7 +157,7 @@ int printMenues(int menu, list* l){
         printf("\t#....................#\n\n");
         newCode();
         printf("1. Bakåt.\n\n");
-        num = 1;
+        return 1;
     }
     else if(menu == 12){
         printf("\t#''''''''''''''''''''''#\n");
@@ -167,7 +166,7 @@ int printMenues(int menu, list* l){
         printf("Öppningskoder: \n");
         printCodes();
         printf("1. Bakåt.\n\n");
-        num = 1;
+        return 1;
     }
     else if(menu == 21){
         printf("\t#''''''''''''''''''''#\n");
@@ -176,7 +175,7 @@ int printMenues(int menu, list* l){
         printf("Mata in ny nära telefon: \n");
         newPhone(l);
         printf("1. Bakåt.\n\n");
-        num = 1;
+        return 1;
     }
     else if(menu == 22){
         printf("\t#''''''''''''''''''''#\n");
@@ -185,7 +184,7 @@ int printMenues(int menu, list* l){
         printf("Telefoner: \n");
         printPhones(l);
         printf("1. Bakåt.\n\n");
-        num = 1;
+        return 1;
     }
     else if(menu == 31){
         printf("\t#'''''''''''''''''''''#\n");
@@ -194,10 +193,8 @@ int printMenues(int menu, list* l){
         printf("Skickar smittalarm.\n");
         sendAlarm();
         printf("1. Bakåt.\n\n");
-        num = 1;
+        return 1;
     }
-
-    return num;
 }
 //function taken from stackoverflow, fflush did not work on linux for some reason.
 //this does what fflush is supposed to do.

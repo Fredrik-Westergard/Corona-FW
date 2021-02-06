@@ -53,8 +53,18 @@ date getDayBefore(date d);
  */
 date getDateNumBefore(date current, int num);
 
+/**
+ * function to compare dates
+ * @param d1 a date
+ * @param d2 a date to compare to
+ * @returns 0 if equal, 1 if d1 is greater than d2, -1 if d1 is smaller than d2
+ */
 int compareDates(date d1, date d2);
 
+/**
+ * function to get todays date
+ * @returns todays date
+ */
 date getTodaysDate();
 
 #endif

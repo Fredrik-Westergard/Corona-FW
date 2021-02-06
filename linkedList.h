@@ -3,32 +3,81 @@
 
 #include "date.h"
 
+/**
+ * node structure
+ */
 struct node{
-    unsigned int code;
-    date d;
-    struct node* next;
+    unsigned int code;  /** the code */
+    date d;             /** the date */
+    struct node* next;  /** the link to the next node */
 };
 
+/**
+ * list structure
+ */
 typedef struct{
-    struct node* head;
+    struct node* head;  /** the link to the first node in the list */
 }list;
 
+/**
+ * function to create list
+ * @returns the new list
+ */
 list* createList();
 
+/**
+ * function to create node
+ * @returns the new node
+ */
 struct node* createNode();
 
+/**
+ * function to add new node to list
+ * @param l the list to add to
+ * @param code the code to add
+ * @param d the date to add
+ */
 void addToList(list* l, unsigned int code, date d);
 
+/**
+ * function to get node recursively
+ * @param n a node to check
+ * @param index the index to check
+ * @returns the wanted node
+ */
 struct node* getIndexRecursive(struct node* n, int index);
 
+/**
+ * function to get a certain node using getIndexRecursively
+ * @param l the list
+ * @param the index of the wanted node
+ * @returns the wanted node
+ */
 struct node* getIndex(list* l, int index);
 
+/**
+ * function to remove item from list
+ * @param l the list
+ * @param index the index of the node to be removed
+ */
 void removeFromList(list* l, int index);
 
+/**
+ * functio nto destroy list
+ * @param l the list to be destroyed
+ */
 void destroyList(list* l);
 
+/**
+ * function to print the items in the list using printNodes
+ * @param l the list to print
+ */
 void printList(list* l);
 
+/**
+ * function to print the nodes in a list
+ * @param n the node to print
+ */
 void printNodes(struct node* n);
 
 #endif
