@@ -5,7 +5,7 @@
 
 
 //fuction to check wether a date is valid
-bool checkDate(struct date d){
+bool checkDate(date d){
     //epoch time variable
     time_t t = time(NULL);
     //time struture for getting day/month/year
@@ -51,4 +51,12 @@ bool checkDate(struct date d){
         }
     }
     return false;
+}
+
+void printDateISO(date d){
+    printf("%04d-%02d-%02d", d.year, d.month, d.day);
+}
+
+void printDateFI(date d){
+    printf("%02d-%02d-%04d", d.day, d.month, d.year);
 }

@@ -11,7 +11,7 @@ void newCode(){
     bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
     while(!good){
-        scanf("%d", &code);
+        scanf("%ud", &code);
         clean_stdin();
         //floor returns the largest value that's less than or equal to the parameter,
         //log10 returns the common log in base 10 of the parameter
@@ -39,11 +39,11 @@ void printCodes(){
 void newPhone(){
     unsigned int id;    //unsigned because it can't be negative
     bool good = false;
-    struct date d;      //date structure
+    date d;      //date structure
 
     printf("Mata in identifikationskod på 6 siffror: \n");
     while(!good){
-        scanf("%d", &id);
+        scanf("%ud", &id);
         clean_stdin();
         //floor returns the largest value that's less than or equal to the parameter,
         //log10 returns the common log in base 10 of the parameter
