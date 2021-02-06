@@ -65,4 +65,7 @@ int getInput(int items);
  */
 void clean_stdin(void);
 
+//gets and checks if the menu input is valid
+int getInput(int items);
+
 #endif

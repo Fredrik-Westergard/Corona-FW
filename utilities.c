@@ -31,7 +31,7 @@ void newCode(){
     printf("Ny kod tillagd.\n");
     return;
 }
-//funtion to print the codes stored
+//funtion to print the stored codes
 void printCodes(){
     printf("koder.\n");
     return;
@@ -223,6 +223,5 @@ int getInput(int items){
         }
         clean_stdin();
 
-        
     }
 }
