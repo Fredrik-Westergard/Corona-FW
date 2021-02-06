@@ -65,14 +65,19 @@ void destroyList(list* l, int length){
     destroyList(l, length-1);
 }
 
-void printList(struct node* n){
+void printList(list* l){
+    if(l->head != NULL){
+        printNodes(l->head);
+    }
+}
 
-    printf("%u, ", n->code);
+void printNodes(struct node* n){
+    printf("%u\t ", n->code);
     printDateISO(n->d);
     printf("\n");
 
     if(n->next == NULL){
         return;
     }
-    printList(n->next);
+    printNodes(n->next);
 }

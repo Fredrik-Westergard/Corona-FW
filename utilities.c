@@ -4,6 +4,7 @@
 #include <math.h>
 #include "utilities.h"
 #include "date.h"
+#include "linkedList.h"
 
 //function to input new opening code
 void newCode(){
@@ -35,8 +36,13 @@ void printCodes(){
     printf("koder.\n");
     return;
 }
+
+int removeTooOld(list* l, int* length){
+    
+}
+
 //function to add a new phone
-void newPhone(){
+void newPhone(list* l, int* length){
     unsigned int id;    //unsigned because it can't be negative
     bool good = false;
     date d;      //date structure
@@ -68,6 +74,8 @@ void newPhone(){
             printf("Ogiltig inmatning, försök igen: \n\n");
         }
     }
+    addToList(l, id, d);
+    length = removeTooOld(l,length);
     printf("\nid: %6d\ndatum: ", id);
     printDateISO(d);
     printf("\n\n");
@@ -75,8 +83,10 @@ void newPhone(){
     return;
 }
 
-void printPhones(){
-    printf("telefoner.\n");
+void printPhones(list* l){
+    printf("ID\tDatum\n");
+    printList(l);
+    printf("\n");
     return;
 }
 
@@ -87,7 +97,7 @@ void sendAlarm(){
 
 
 //Prints the menues
-int printMenues(int menu){
+int printMenues(int menu, list* l, int* length){
     //the number of choices in the menu
     int num = 0;
     
@@ -116,7 +126,7 @@ int printMenues(int menu){
     }
     else if(menu == 2){
         printf("\t#'''''''''''''''''''''''''''''''''''''''''#\n");
-        printf("\t|  Mata in identifikationskod och datum   |\n|");   
+        printf("\t|  Mata in identifikationskod och datum   |\n");   
         printf("\t|          för en nära telefon!           |\n");
         printf("\t#.........................................#\n\n");
         printf("1. Ny nära telefon.\n");
@@ -154,7 +164,8 @@ int printMenues(int menu){
         printf("\t|   Ny Nära Telefon   |\n");
         printf("\t#.....................#\n\n");
         printf("Mata in ny nära telefon: \n");
-        newPhone();
+        newPhone(l, length);
+        (*length)++;
         printf("1. Bakåt.\n\n");
         num = 1;
     }
@@ -163,7 +174,7 @@ int printMenues(int menu){
         printf("\t|   Visa Telefoner   |\n");
         printf("\t#....................#\n\n");
         printf("Telefoner: \n");
-        printPhones();
+        printPhones(l);
         printf("1. Bakåt.\n\n");
         num = 1;
     }

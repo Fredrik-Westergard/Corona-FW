@@ -23,5 +23,6 @@ date getDateNumBefore(date current, int num);
 
 int compareDates(date d1, date d2);
 
+date getTodaysDate();
 
 #endif

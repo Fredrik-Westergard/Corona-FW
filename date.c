@@ -2,6 +2,8 @@
 #include <stdbool.h>
 #include <time.h>
 #include "date.h"
+#include <time.h>
+#include <stdlib.h>
 
 
 //fuction to check wether a date is valid
@@ -122,4 +124,14 @@ int compareDates(date d1, date d2){
     else{
         return -1;
     }
+}
+
+date getTodaysDate(){
+    time_t t = time(NULL);
+    struct tm* ts = localtime(&t);
+    date d;
+    d.day = ts->tm_mday;
+    d.month = ts->tm_mon+1;
+    d.year = ts->tm_year+1900;
+    return d;
 }

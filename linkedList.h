@@ -27,6 +27,8 @@ void removeFromList(list* l, int index, int length);
 
 void destroyList(list* l, int length);
 
-void printList(struct node* n);
+void printList(list* l);
+
+void printNodes(struct node* n);
 
 #endif
