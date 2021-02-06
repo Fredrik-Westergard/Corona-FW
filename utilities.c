@@ -36,7 +36,7 @@ void printCodes(){
     printf("koder.\n");
     return;
 }
-
+//function to remove old phones recursively
 void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
     if(n == NULL){
         return;
@@ -46,7 +46,7 @@ void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
     }
     removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+1);
 }
-
+//function to remove old phones using removeOldRecursive()
 void removeTooOld(list* l){
     if(l->head != NULL){
         removeOldRecursive(l,l->head, getDateNumBefore(getTodaysDate(),21), 0);
@@ -94,20 +94,18 @@ void newPhone(list* l){
     printf("Ny telefon tillagd.\n");
     return;
 }
-
+//prints the phones
 void printPhones(list* l){
     printf("ID\tDatum\n");
     printList(l);
     printf("\n");
     return;
 }
-
+//sends alarm
 void sendAlarm(){
     printf("Alarm skickat.\n");
     return;
 }
-
-
 //Prints the menues
 int printMenues(int menu, list* l){
     //the number of choices in the menu
@@ -209,7 +207,6 @@ void clean_stdin(void){
         c = getchar();
     } while (c != '\n' && c != EOF);
 }
-
 //gets and checks if the menu input is valid
 int getInput(int items){
     while(true){

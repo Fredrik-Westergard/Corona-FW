@@ -6,9 +6,9 @@
 
 //main function
 int main(int argc, char const *argv[]){
-    bool running = true;
+    bool running = true;        //boolean used to check if the main loop is running
     int number = 0;             //the level it's on
-    list* l = createList();
+    list* l = createList();     //creates linked list for phones
     int size = printMenues(0, l);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
@@ -39,6 +39,7 @@ int main(int argc, char const *argv[]){
         //gets the menu item from user
         menu = getInput(size);
     }
+    //destroys list
     destroyList(l);
     return 0;
 }

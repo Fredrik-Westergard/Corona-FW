@@ -54,23 +54,22 @@ bool checkDate(date d){
     }
     return false;
 }
-
+//function to print date in ISO 8601 format
 void printDateISO(date d){
     printf("%04d-%02d-%02d", d.year, d.month, d.day);
 }
-
+//function to print date in finnish format
 void printDateFI(date d){
     printf("%02d-%02d-%04d", d.day, d.month, d.year);
 }
-
+//function to check if a date is in a leap year
 bool isLeapYear(date d){
     if((d.year%4 == 0)&&(d.year%100 != 0 || d.year%400 == 0)){
         return true;
     }
     return false;
 }
-
-
+//function to get the day before a date
 date getDayBefore(date d){
     int days[12] = {31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -89,7 +88,7 @@ date getDayBefore(date d){
     return d;
 
 }
-
+//function to get a date a number of days before the given date
 date getDateNumBefore(date current, int num){
     if(num <= 0){
         return current;
@@ -97,7 +96,7 @@ date getDateNumBefore(date current, int num){
     date new = getDateNumBefore(getDayBefore(current), num-1);
     return new;
 }
-
+//function to compare dates
 int compareDates(date d1, date d2){
     if(d1.year == d2.year){
         if(d1.month == d2.month){
@@ -125,7 +124,7 @@ int compareDates(date d1, date d2){
         return -1;
     }
 }
-
+//function to get todays date
 date getTodaysDate(){
     time_t t = time(NULL);
     struct tm* ts = localtime(&t);
