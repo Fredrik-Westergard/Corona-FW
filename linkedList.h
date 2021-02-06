@@ -4,7 +4,7 @@
 #include "date.h"
 
 struct node{
-    int code;
+    unsigned int code;
     date d;
     struct node* next;
 };
@@ -17,14 +17,16 @@ list* createList();
 
 struct node* createNode();
 
-void addToList(list* l);
+void addToList(list* l, unsigned int code, date d);
 
-struct node* getIndexRecursive(struct node* n, int index)
+struct node* getIndexRecursive(struct node* n, int index);
 
 struct node* getIndex(list* l, int index);
 
-void removeFromList(list* l, int index);
+void removeFromList(list* l, int index, int length);
 
-void destroyList(list* l);
+void destroyList(list* l, int length);
+
+void printList(struct node* n);
 
 #endif

@@ -3,3 +3,7 @@ all:
 
 dateTest:
 	gcc dateTest.c date.c -Wall -pedantic -o dateTests
+
+linkedTest:
+	gcc linkedTest.c linkedList.c date.c -o linkedListTest
+	
