@@ -195,6 +195,7 @@ int printMenus(int menu, list* l){
         printf("1. Bakåt.\n\n");
         return 1;
     }
+    return 0;
 }
 //function taken from stackoverflow, fflush did not work on linux for some reason.
 //this does what fflush is supposed to do.
