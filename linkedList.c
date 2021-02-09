@@ -73,7 +73,7 @@ void printList(list* l){
 }
 //function to print nodes recursively
 void printNodes(struct node* n){
-    printf("%u\t ", n->code);
+    printf("%u\t", n->code);
     printDateISO(n->d);
     printf("\n");
 
