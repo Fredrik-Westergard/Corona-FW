@@ -1,5 +1,5 @@
 #ignoring gcc binaries
 corona
-dateTests
 linkedListTest
+dateTests
 *.o
