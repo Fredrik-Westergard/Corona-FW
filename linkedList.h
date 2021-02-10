@@ -80,4 +80,18 @@ void printList(list* l);
  */
 void printNodes(struct node* n);
 
+/**
+ * function to get list length recursively
+ * @param n the current node
+ * @returns the list length
+ */
+int getListLengthRec(struct node* n);
+
+/**
+ * function to get list length recursively using getListLengthRec
+ * @param l the list
+ * @returns the list length
+ */
+int getListLength(list* l);
+
 #endif

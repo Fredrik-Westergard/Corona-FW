@@ -81,4 +81,15 @@ void printNodes(struct node* n){
         return;
     }
     printNodes(n->next);
+} 
+//function to get the list length recursively
+int getListLengthRec(struct node* n){
+    if(n->next == NULL){
+        return 0;
+    }
+    return getListLengthRec(n->next)+1;
+}
+//function to get the list length using getListLengthRec()
+int getListLength(list* l){
+    return getListLengthRec(l->head);
 }
