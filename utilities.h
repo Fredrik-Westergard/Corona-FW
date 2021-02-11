@@ -6,7 +6,7 @@
 /**
  * function to add new code 
  */
-void newCode();
+void newCode(list* l);
 
 /**
  * function to print codes

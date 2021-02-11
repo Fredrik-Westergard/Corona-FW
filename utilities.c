@@ -7,7 +7,7 @@
 #include "linkedList.h"
 
 //function to input new opening code
-void newCode(){
+void newCode(list* l){
     unsigned int code;  //unsigned because it can't be negativce
     bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
@@ -27,8 +27,11 @@ void newCode(){
         }
     }
     printf("öppningskod: %8d\n", code);
+    printf("Ny kod tillagd.\n\n");
+    printf("Nära telefoner de senaste 21 dagarna:\n");
+    removeTooOld(l);
+    printPhones(l);
 
-    printf("Ny kod tillagd.\n");
     return;
 }
 //funtion to print the stored codes
@@ -89,7 +92,6 @@ void newPhone(list* l){
         }
     }
     addToList(l, id, d);
-    removeTooOld(l);
     printf("\nid: %6d\ndatum: ", id);
     printDateISO(d);
     printf("\n\n");
@@ -155,7 +157,7 @@ int printMenus(int menu, list* l){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny öppningskod   |\n");
         printf("\t#....................#\n\n");
-        newCode();
+        newCode(l);
         printf("1. Bakåt.\n\n");
         return 1;
     }
