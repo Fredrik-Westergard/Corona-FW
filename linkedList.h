@@ -94,4 +94,8 @@ int getListLengthRec(struct node* n);
  */
 int getListLength(list* l);
 
+bool writeData(list* l);
+
+bool readData(list* l);
+
 #endif

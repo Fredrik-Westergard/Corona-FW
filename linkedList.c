@@ -93,3 +93,12 @@ int getListLengthRec(struct node* n){
 int getListLength(list* l){
     return getListLengthRec(l->head);
 }
+
+bool writeData(list* l){
+
+    return false;
+}
+
+bool readData(list* l){
+    return false;
+}
