@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include "linkedList.h"
+#include "date.h"
 #include <stdlib.h>
 
 //function to create linked list
 list* createList(){
     list* l = (list*) malloc(sizeof(list));
+    l->length = 0;
     return l;
 }
 //function to create node
@@ -24,6 +26,7 @@ void addToList(list* l, unsigned int code, date d){
         n->next = l->head;
     }
     l->head = n;
+    l->length++;
 }
 //function to get the next element recursively
 struct node* getIndexRecursive(struct node* n, int index){
@@ -51,6 +54,7 @@ void removeFromList(list* l, int index){
             prev->next = toRemove->next;
             free(toRemove);
         }
+        l->length--;
     }
     else{
         printf("List Error: length is 0\n");
@@ -95,10 +99,40 @@ int getListLength(list* l){
 }
 
 bool writeData(list* l){
+    FILE* f = fopen("coronaSaves", "w");
+
+    if(f != NULL){
+        removeTooOld(l);
+        struct node* n = l->head;
+        for(int i = 0; i < l->length; i++){
+            fprintf(f, "%d, %d-%d-%d\n", n->code, n->d.year, n->d.month, n->d.day);
+            n = n->next;
+        }
+        return true;
+    }
 
     return false;
 }
 
 bool readData(list* l){
     return false;
+}
+
+//function to remove old phones recursively
+void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
+    if(n == NULL){
+        return;
+    }
+    int i = 1;
+    if(compareDates(tooOld, n->d) > 0){
+        removeFromList(l, index);
+        i--;
+    }
+    removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+i);
+}
+//function to remove old phones using removeOldRecursive()
+void removeTooOld(list* l){
+    if(l->head != NULL){
+        removeOldRecursive(l,l->head, getDateNumBefore(getTodaysDate(),21), 0);
+    }
 }

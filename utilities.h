@@ -14,21 +14,6 @@ void newCode(list* l);
 void printCodes();
 
 /**
- * function to remove old phones recursively
- * @param l a linked list
- * @param n a node in the list
- * @param tooOld the date to compare to
- * @param index the index it's looking at at the moment
- */
-void removeOldRecursive(list* l, struct node* n, date tooOld, int index);
-
-/**
- * function to remove old phones using removeOldRecursive
- * @param l the linked list
- */
-void removeTooOld(list* l);
-
-/**
  * function to add new phone to linked list
  * @param l the linked list
  */

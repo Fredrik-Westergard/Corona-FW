@@ -39,24 +39,6 @@ void printCodes(){
     printf("koder.\n");
     return;
 }
-//function to remove old phones recursively
-void removeOldRecursive(list* l, struct node* n, date tooOld, int index){
-    if(n == NULL){
-        return;
-    }
-    int i = 1;
-    if(compareDates(tooOld, n->d) > 0){
-        removeFromList(l, index);
-        i--;
-    }
-    removeOldRecursive(l,n->next, getDateNumBefore(getTodaysDate(),21), index+i);
-}
-//function to remove old phones using removeOldRecursive()
-void removeTooOld(list* l){
-    if(l->head != NULL){
-        removeOldRecursive(l,l->head, getDateNumBefore(getTodaysDate(),21), 0);
-    }
-}
 
 //function to add a new phone
 void newPhone(list* l){

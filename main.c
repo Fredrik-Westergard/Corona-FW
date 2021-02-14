@@ -39,6 +39,7 @@ int main(int argc, char const *argv[]){
         //gets the menu item from user
         menu = getInput(size);
     }
+    writeData(l);
     //destroys list
     destroyList(l);
     return 0;
