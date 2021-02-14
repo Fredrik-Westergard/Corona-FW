@@ -86,17 +86,6 @@ void printNodes(struct node* n){
     }
     printNodes(n->next);
 } 
-//function to get the list length recursively
-int getListLengthRec(struct node* n){
-    if(n->next == NULL){
-        return 0;
-    }
-    return getListLengthRec(n->next)+1;
-}
-//function to get the list length using getListLengthRec()
-int getListLength(list* l){
-    return getListLengthRec(l->head);
-}
 
 bool writeData(list* l){
     FILE* f = fopen("coronaSaves", "wb+");
@@ -115,7 +104,26 @@ bool writeData(list* l){
 }
 
 bool readData(list* l){
-    
+    FILE* f = fopen("coronaSaves","rb+");
+
+    if(f != NULL){
+        bool loop = true;
+        while(loop){
+            char c;
+            if((c = fgetc(f)) != EOF){
+                ungetc(c,f);
+                unsigned int code;
+                date d;
+                fscanf(f,"%u, %d-%d-%d\n",&code,&d.year,&d.month,&d.day);
+                addToList(l,code,d);
+            }
+            else{
+                loop = false;
+            }
+        }
+        removeTooOld(l);
+        return true;
+    }
     return false;
 }
 

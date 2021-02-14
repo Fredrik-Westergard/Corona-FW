@@ -108,12 +108,12 @@ int main(int argc, char const *argv[])
     removeTooOld(l);
     printList(l);
 
-    int length = getListLength(l);
+    int length = l->length;
     TEST_CASE("REMOVING INDEX 3, 0 AND 1")
     removeFromList(l, 3);
     removeFromList(l, 0);
     removeFromList(l, 1);
-    VERIFY((getListLength(l) == length-3), "verify that the list length is 3 less than before");
+    VERIFY((l->length == length-3), "verify that the list length is 3 less than before");
     printf("\n");
     
     TEST_CASE("VERIFY OUTPUT")
