@@ -99,7 +99,7 @@ int getListLength(list* l){
 }
 
 bool writeData(list* l){
-    FILE* f = fopen("coronaSaves", "w");
+    FILE* f = fopen("coronaSaves", "wb+");
 
     if(f != NULL){
         removeTooOld(l);
@@ -115,6 +115,7 @@ bool writeData(list* l){
 }
 
 bool readData(list* l){
+    
     return false;
 }
 

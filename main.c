@@ -9,6 +9,7 @@ int main(int argc, char const *argv[]){
     bool running = true;        //boolean used to check if the main loop is running
     int number = 0;             //the level it's on
     list* l = createList();     //creates linked list for phones
+    readData(l);
     int size = printMenus(0, l);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
@@ -21,7 +22,7 @@ int main(int argc, char const *argv[]){
         if(size == menu){
             //if the user chose "avsluta"
             if(number == 0){
-                exit(0);
+                break;
             }
             //go back one step
             number = number/10;
@@ -39,6 +40,7 @@ int main(int argc, char const *argv[]){
         //gets the menu item from user
         menu = getInput(size);
     }
+    //writes to file
     writeData(l);
     //destroys list
     destroyList(l);
