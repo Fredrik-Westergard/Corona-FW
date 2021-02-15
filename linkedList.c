@@ -2,6 +2,7 @@
 #include "linkedList.h"
 #include "date.h"
 #include <stdlib.h>
+#include <string.h>
 
 //function to create linked list
 list* createList(){
@@ -88,7 +89,11 @@ void printNodes(struct node* n){
 } 
 
 bool writeData(list* l, int id){
-    FILE* f = fopen("coronaSaves", "wb+");
+    char loc[18] = "coronaSaves";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc, "ab+");
 
     if(f != NULL){
         removeTooOld(l);
@@ -104,7 +109,11 @@ bool writeData(list* l, int id){
 }
 
 bool readData(list* l, int id){
-    FILE* f = fopen("coronaSaves","rb+");
+    char loc[18] = "coronaSaves";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc,"ab+");
 
     if(f != NULL){
         bool loop = true;
