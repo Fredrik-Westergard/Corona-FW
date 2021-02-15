@@ -117,7 +117,7 @@ void sendAlarm(list* l){
     sendAlarmRec(l->head);
 }
 //Prints the menus
-int printMenus(int menu, list* l, int id){    
+int printMenus(int menu, list* l){    
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 

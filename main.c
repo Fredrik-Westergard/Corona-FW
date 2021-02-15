@@ -31,7 +31,7 @@ int main(int argc, char const *argv[]){
     if(getAlarm(id)){
         printf("ALARM!\n");
     }
-    int size = printMenus(0, l,id);  //how many menu choices there are
+    int size = printMenus(0, l);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
     //menu loop
@@ -55,7 +55,7 @@ int main(int argc, char const *argv[]){
             number = (number*10)+menu;
         }
         //prints the menu and gets the number of menu choices
-        size = printMenus(number, l, id);
+        size = printMenus(number, l);
         //gets the menu item from user
         menu = getInput(size);
     }

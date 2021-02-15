@@ -39,7 +39,7 @@ void sendAlarm();
  * @param l a linked list with phones
  * @returns the number of chices in menu
  */
-int printMenus(int menu, list* l, int id);
+int printMenus(int menu, list* l);
 
 /**
  * function to get input
