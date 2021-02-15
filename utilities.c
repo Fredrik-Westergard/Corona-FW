@@ -7,6 +7,8 @@
 #include "linkedList.h"
 #include <errno.h>
 #include <limits.h>
+#include <string.h>
+#include <stdbool.h>
 
 //function to input new opening code
 void newCode(list* l){
@@ -89,10 +91,30 @@ void printPhones(list* l){
     printf("\n");
     return;
 }
-//sends alarm
-void sendAlarm(){
+
+void sendAlarmRec(struct node* n){
+    if(n == NULL){
+        return;
+    }
+    int id = n->code;
+    char loc[18] = "coronaAlarm";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc,"ab+");
     printf("Alarm skickat.\n");
-    return;
+
+    if(f != NULL){
+        date d = getTodaysDate();
+        fprintf(f, "%d-%d-%d", d.year,d.month,d.day);
+        fclose(f);
+    }
+}
+
+//sends alarm
+void sendAlarm(list* l){
+    removeTooOld(l);
+    sendAlarmRec(l->head);
 }
 //Prints the menus
 int printMenus(int menu, list* l, int id){    
@@ -177,7 +199,7 @@ int printMenus(int menu, list* l, int id){
         printf("\t|   Nytt Smittalarm   |\n");
         printf("\t#.....................#\n\n");
         printf("Skickar smittalarm.\n");
-        sendAlarm();
+        sendAlarm(l);
         printf("1. Bakåt.\n\n");
         return 1;
     }
@@ -226,4 +248,23 @@ int getUser(const char* argv){
         int id = conv;    
         return id;
     }
+}
+
+bool getAlarm(int id){
+    char loc[18] = "coronaAlarm";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc,"r");
+
+    if(f != NULL){
+        date d, b;
+        fscanf(f, "%d-%d-%d", &d.year,&d.month,&d.day);
+        b = getDateNumBefore(getTodaysDate(),21);
+        if(compareDates(d, b) > 0){
+            return true;
+        }
+        fclose(f);
+    }
+    return false;
 }

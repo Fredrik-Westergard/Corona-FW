@@ -3,6 +3,7 @@
 #include "date.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 //function to create linked list
 list* createList(){
@@ -102,6 +103,7 @@ bool writeData(list* l, int id){
             fprintf(f, "%d, %d-%d-%d\n", n->code, n->d.year, n->d.month, n->d.day);
             n = n->next;
         }
+        fclose(f);
         return true;
     }
 
@@ -131,6 +133,7 @@ bool readData(list* l, int id){
             }
         }
         removeTooOld(l);
+        fclose(f);
         return true;
     }
     return false;

@@ -28,6 +28,9 @@ int main(int argc, char const *argv[]){
 
     list* l = createList();     //creates linked list for phones
     readData(l, id);
+    if(getAlarm(id)){
+        printf("ALARM!\n");
+    }
     int size = printMenus(0, l,id);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 

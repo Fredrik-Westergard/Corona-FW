@@ -2,6 +2,7 @@
 #define UTILITIES_H__
 
 #include "linkedList.h"
+#include <stdbool.h>
 
 /**
  * function to add new code 
@@ -24,6 +25,8 @@ void newPhone(list* l);
  * @param l the linked list
  */
 void printPhones(list* l);
+
+void sendAlarmRec(struct node* n);
 
 /**
  * function to send alarm
@@ -54,5 +57,7 @@ void clean_stdin(void);
 int getInput(int items);
 
 int getUser(const char* argv);
+
+bool getAlarm(int id);
 
 #endif
