@@ -5,6 +5,8 @@
 #include "utilities.h"
 #include "date.h"
 #include "linkedList.h"
+#include <errno.h>
+#include <limits.h>
 
 //function to input new opening code
 void newCode(list* l){
@@ -93,7 +95,7 @@ void sendAlarm(){
     return;
 }
 //Prints the menus
-int printMenus(int menu, list* l){    
+int printMenus(int menu, list* l, int id){    
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 
@@ -207,5 +209,21 @@ int getInput(int items){
         }
         clean_stdin();
 
+    }
+}
+
+int getUser(const char* argv){
+    char *c;
+
+    errno = 0;
+    long conv = strtol(argv, &c, 10);
+
+    // Check for errors: e.g., the string does not represent an integer
+    // or the integer is larger than int
+    if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 6) {
+        return -1;
+    } else {
+        int id = conv;    
+        return id;
     }
 }

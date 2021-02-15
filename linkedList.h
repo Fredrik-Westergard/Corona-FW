@@ -81,9 +81,9 @@ void printList(list* l);
  */
 void printNodes(struct node* n);
 
-bool writeData(list* l);
+bool writeData(list* l, int id);
 
-bool readData(list* l);
+bool readData(list* l, int id);
 
 /**
  * function to remove old phones recursively

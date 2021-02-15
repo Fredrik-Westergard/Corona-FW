@@ -36,7 +36,7 @@ void sendAlarm();
  * @param l a linked list with phones
  * @returns the number of chices in menu
  */
-int printMenus(int menu, list* l);
+int printMenus(int menu, list* l, int id);
 
 /**
  * function to get input
@@ -52,5 +52,7 @@ void clean_stdin(void);
 
 //gets and checks if the menu input is valid
 int getInput(int items);
+
+int getUser(const char* argv);
 
 #endif

@@ -87,7 +87,7 @@ void printNodes(struct node* n){
     printNodes(n->next);
 } 
 
-bool writeData(list* l){
+bool writeData(list* l, int id){
     FILE* f = fopen("coronaSaves", "wb+");
 
     if(f != NULL){
@@ -103,7 +103,7 @@ bool writeData(list* l){
     return false;
 }
 
-bool readData(list* l){
+bool readData(list* l, int id){
     FILE* f = fopen("coronaSaves","rb+");
 
     if(f != NULL){
