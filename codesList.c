@@ -28,15 +28,15 @@ void addToCodes(codes* c, unsigned int code){
 }
 
 //function to get the next element recursively
-struct cnode* getIndexRecursive(struct cnode* n, int index){
+struct cnode* getCodeIndexRecursive(struct cnode* n, int index){
     if(index == 0){
         return n;
     }
-    return getIndexRecursive(n->next, index-1);
+    return getCodeIndexRecursive(n->next, index-1);
 }
 //function to get a specific element using getIndexRecursive
 struct cnode* getCodeIndex(codes* l, int index){
-    return getIndexRecursive(l->head, index);
+    return getCodeIndexRecursive(l->head, index);
 }
 //function to remove item from list
 void removeFromCodes(codes* c, int index){
@@ -69,7 +69,7 @@ void destroyCodes(codes* c){
     destroyCodes(c);
 }
 //function to print the list using printNodes()
-void printCodes(codes* c){
+void printCodesList(codes* c){
     if(c->head != NULL){
         printCnodes(c->head);
     }

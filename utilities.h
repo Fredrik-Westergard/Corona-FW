@@ -3,16 +3,17 @@
 
 #include "linkedList.h"
 #include <stdbool.h>
+#include "codesList.h"
 
 /**
  * function to add new code 
  */
-void newCode(list* l);
+void newCode(list* l, codes* c);
 
 /**
  * function to print codes
  */
-void printCodes();
+void printCodes(codes* c);
 
 /**
  * function to add new phone to linked list
@@ -39,7 +40,7 @@ void sendAlarm();
  * @param l a linked list with phones
  * @returns the number of chices in menu
  */
-int printMenus(int menu, list* l);
+int printMenus(int menu, list* l, codes* c);
 
 /**
  * function to get input

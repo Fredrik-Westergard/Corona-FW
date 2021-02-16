@@ -35,7 +35,7 @@ int main(int argc, char const *argv[])
     addToCodes(c, 12345679);
 
     TEST_CASE("VERIFY OUTPUT")
-    printCodes(c);
+    printCodesList(c);
     printf("\n");
 
     int length = c->length;
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
     printf("\n");
     
     TEST_CASE("VERIFY OUTPUT")
-    printCodes(c);
+    printCodesList(c);
     destroyCodes(c);
 
     return 0;

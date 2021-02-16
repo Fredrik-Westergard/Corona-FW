@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "utilities.h"
 #include "linkedList.h"
+#include "codesList.h"
 
 //main function
 int main(int argc, char const *argv[]){
@@ -25,7 +26,7 @@ int main(int argc, char const *argv[]){
         printf("Inget användar ID inmatat\n");
         exit(0);
     }
-
+    codes* c = createCodesList();
     list* l = createList();     //creates linked list for phones
     readData(l, id);
     if(getAlarm(id)){
@@ -35,7 +36,7 @@ int main(int argc, char const *argv[]){
         scanf("%*c");
         clean_stdin();
     }
-    int size = printMenus(0, l);  //how many menu choices there are
+    int size = printMenus(0, l, c);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
     //menu loop
@@ -59,7 +60,7 @@ int main(int argc, char const *argv[]){
             number = (number*10)+menu;
         }
         //prints the menu and gets the number of menu choices
-        size = printMenus(number, l);
+        size = printMenus(number, l, c);
         //gets the menu item from user
         menu = getInput(size);
     }
@@ -67,5 +68,6 @@ int main(int argc, char const *argv[]){
     writeData(l,id);
     //destroys list
     destroyList(l);
+    destroyCodes(c);
     return 0;
 }

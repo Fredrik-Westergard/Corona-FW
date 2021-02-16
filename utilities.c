@@ -9,9 +9,10 @@
 #include <limits.h>
 #include <string.h>
 #include <stdbool.h>
+#include "codesList.h"
 
 //function to input new opening code
-void newCode(list* l){
+void newCode(list* l, codes* c){
     unsigned int code;  //unsigned because it can't be negativce
     bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
@@ -33,14 +34,16 @@ void newCode(list* l){
     printf("öppningskod: %8d\n", code);
     printf("Ny kod tillagd.\n\n");
     printf("Nära telefoner de senaste 21 dagarna:\n");
+    addToCodes(c, code);
     removeTooOld(l);
     printPhones(l);
 
     return;
 }
 //funtion to print the stored codes
-void printCodes(){
-    printf("koder.\n");
+void printCodes(codes* c){
+    printf("koder:\n");
+    printCodesList(c);
     return;
 }
 
@@ -117,7 +120,7 @@ void sendAlarm(list* l){
     sendAlarmRec(l->head);
 }
 //Prints the menus
-int printMenus(int menu, list* l){  
+int printMenus(int menu, list* l, codes* c){  
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 
@@ -163,7 +166,7 @@ int printMenus(int menu, list* l){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny öppningskod   |\n");
         printf("\t#....................#\n\n");
-        newCode(l);
+        newCode(l,c);
         printf("1. Bakåt.\n\n");
         return 1;
     }
@@ -172,7 +175,7 @@ int printMenus(int menu, list* l){
         printf("\t|   Visa öppningskod   |\n");
         printf("\t#......................#\n\n");
         printf("Öppningskoder: \n");
-        printCodes();
+        printCodes(c);
         printf("1. Bakåt.\n\n");
         return 1;
     }
