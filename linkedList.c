@@ -9,6 +9,7 @@
 list* createList(){
     list* l = (list*) malloc(sizeof(list));
     l->length = 0;
+    l->head = NULL;
     return l;
 }
 //function to create node
@@ -94,7 +95,7 @@ bool writeData(list* l, int id){
     char str[7];
     sprintf(str,"%d",id);
     strcat(loc, str);
-    FILE* f = fopen(loc, "ab+");
+    FILE* f = fopen(loc, "wb+");
 
     if(f != NULL){
         removeTooOld(l);

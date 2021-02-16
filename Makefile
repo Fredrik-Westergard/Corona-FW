@@ -1,6 +1,6 @@
 CFLAGS = -Wall -pedantic
 
-all: corona linkedListTest dateTest createCodes codeListTest clean
+all: corona linkedListTest dateTest createCodes codeListTest
 
 corona: main.o utilities.o date.o linkedList.o codesList.o
 	gcc $(CFLAGS) main.o utilities.o date.o linkedList.o codesList.o -o corona -lm
@@ -11,7 +11,7 @@ dateTest: date.o
 linkedListTest: linkedList.o date.o
 	gcc $(CFLAGS) linkedTest.c linkedList.o date.o -o linkedListTest -lm
 
-codeListTest: codesList.o
+codeListTest: codeListTest.c codesList.o
 	gcc $(CFLAGS) codeListTest.c codesList.o -o codeListTest
 
 main.o: main.c utilities.h date.h linkedList.h codesList.h

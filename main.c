@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]){
         scanf("%*c");
         clean_stdin();
     }
-    int size = printMenus(0, l, c);  //how many menu choices there are
+    int size = printMenus(0, l, c, id);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
     //menu loop
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[]){
             number = (number*10)+menu;
         }
         //prints the menu and gets the number of menu choices
-        size = printMenus(number, l, c);
+        size = printMenus(number, l, c, id);
         //gets the menu item from user
         menu = getInput(size);
     }

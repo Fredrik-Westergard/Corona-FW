@@ -50,5 +50,9 @@ int main(int argc, char const *argv[])
     printCodesList(c);
     destroyCodes(c);
 
+    codes* d = createCodesList();
+
+    destroyCodes(d);
+
     return 0;
 }

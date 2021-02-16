@@ -6,6 +6,7 @@
 codes* createCodesList(){
     codes* c = (codes*) malloc(sizeof(codes));
     c->length = 0;
+    c->head = NULL;
     return c;
 }
 
@@ -35,8 +36,8 @@ struct cnode* getCodeIndexRecursive(struct cnode* n, int index){
     return getCodeIndexRecursive(n->next, index-1);
 }
 //function to get a specific element using getIndexRecursive
-struct cnode* getCodeIndex(codes* l, int index){
-    return getCodeIndexRecursive(l->head, index);
+struct cnode* getCodeIndex(codes* c, int index){
+    return getCodeIndexRecursive(c->head, index);
 }
 //function to remove item from list
 void removeFromCodes(codes* c, int index){
@@ -82,4 +83,51 @@ void printCnodes(struct cnode* n){
         return;
     }
     printCnodes(n->next);
-} 
+}
+
+bool readCodes(codes* c, int id){
+    FILE* f = fopen("openingCodes","r");
+
+    if(f != NULL){
+        bool loop = true;
+        while(loop){
+            char ch;
+            unsigned int id2;
+            if((ch = fgetc(f)) != EOF){
+                ungetc(ch,f);
+                unsigned int code;
+                fscanf(f,"%u - %u\n",&id2, &code);
+                if(id2 == id){
+                    addToCodes(c,code);
+                }   
+            }
+            else{
+                loop = false;
+            }
+        }
+        fclose(f);
+        return true;
+    }
+    return false;
+}
+
+bool compareRec(unsigned int toCompare, struct cnode* n){
+    if(n == NULL){
+        return false;
+    }
+    if(toCompare == n->code){
+        return true;
+    }
+    return compareRec(toCompare, n->next);
+}
+
+bool compareCodes(codes* c, codes* d){
+    struct cnode* n = c->head;
+    for(int i = 0; i < c->length; i++){
+        if(compareRec(n->code, d->head)){
+            return true;
+        }
+        n = n->next;
+    }
+    return false;
+}

@@ -104,8 +104,7 @@ void sendAlarmRec(struct node* n){
     char str[7];
     sprintf(str,"%d",id);
     strcat(loc, str);
-    FILE* f = fopen(loc,"ab+");
-    printf("Alarm skickat.\n");
+    FILE* f = fopen(loc,"wb+");
 
     if(f != NULL){
         date d = getTodaysDate();
@@ -115,15 +114,31 @@ void sendAlarmRec(struct node* n){
 }
 
 //sends alarm
-void sendAlarm(list* l){
-    removeTooOld(l);
-    sendAlarmRec(l->head);
+void sendAlarm(list* l, codes* c, int id){
+    codes* toCompare = createCodesList();
+    bool temp = false;
+    if(readCodes(toCompare, id)){
+        if(toCompare->length != 0){
+            if(compareCodes(c, toCompare)){
+                removeTooOld(l);
+                sendAlarmRec(l->head);
+                temp = true;
+                printf("Alarm skickat!\n");
+            }
+        }
+    }
+
+    if(!temp){
+        printf("Alarm misslyckades, vänligen mata in giltig öppningskod!\n");
+    }
+
+    destroyCodes(toCompare);
 }
 //Prints the menus
-int printMenus(int menu, list* l, codes* c){  
+int printMenus(int menu, list* l, codes* c, int id){  
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
-    if(menu == 0 || menu == 13 || menu == 23 || menu == 32 || 
+    if(menu == 0 || menu == 13 || menu == 23 || menu == 33 || 
         menu == 111 || menu == 121 || menu == 211 || menu == 221 || menu == 311){
 
         printf("\t#'''''''''''''''''''#\n");
@@ -131,7 +146,7 @@ int printMenus(int menu, list* l, codes* c){
         printf("\t#...................#\n\n");
         printf("1. Mata in öppningskod.\n");
         printf("2. Mata in identifikationskod och datum för en nära telefon.\n");
-        printf("3. Ta emot smittalarm.\n");
+        printf("3. Skicka eller ta emot smittalarm.\n");
         printf("4. Avsluta\n\n");
         return 4;
     }
@@ -155,12 +170,13 @@ int printMenus(int menu, list* l, codes* c){
         return 3;
     }
     else if(menu == 3){
-        printf("\t#''''''''''''''''''''''''#\n");
-        printf("\t|   Ta emot smittalarm   |\n");
-        printf("\t#........................#\n\n");
+        printf("\t#'''''''''''''''''''''''''''''''''''''#\n");
+        printf("\t|   Ta skicka eller emot smittalarm   |\n");
+        printf("\t#.....................................#\n\n");
         printf("1. Nytt smittalarm.\n");
-        printf("2. Bakåt.\n\n");
-        return 2;
+        printf("2. Sök efter smittlarm.\n");
+        printf("3. Bakåt.\n\n");
+        return 3;
     }
     else if(menu == 11){
         printf("\t#''''''''''''''''''''#\n");
@@ -201,8 +217,18 @@ int printMenus(int menu, list* l, codes* c){
         printf("\t#'''''''''''''''''''''#\n");
         printf("\t|   Nytt Smittalarm   |\n");
         printf("\t#.....................#\n\n");
-        printf("Skickar smittalarm.\n");
-        sendAlarm(l);
+        sendAlarm(l,c,id);
+        printf("1. Bakåt.\n\n");
+        return 1;
+    }
+    else if(menu == 32){
+        printf("\t#''''''''''''''''''''''''''''#\n");
+        printf("\t|   Söker efter Smittalarm   |\n");
+        printf("\t#............................#\n\n");
+        if(getAlarm(id)){
+        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
+        printf("vänligen ring coronaupplysningen för instruktioner.\n");
+        }
         printf("1. Bakåt.\n\n");
         return 1;
     }

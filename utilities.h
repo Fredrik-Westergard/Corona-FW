@@ -32,7 +32,7 @@ void sendAlarmRec(struct node* n);
 /**
  * function to send alarm
  */
-void sendAlarm();
+void sendAlarm(list* l, codes* c,int id);
 
 /**
  * function to print menus
@@ -40,7 +40,7 @@ void sendAlarm();
  * @param l a linked list with phones
  * @returns the number of chices in menu
  */
-int printMenus(int menu, list* l, codes* c);
+int printMenus(int menu, list* l, codes* c, int id);
 
 /**
  * function to get input

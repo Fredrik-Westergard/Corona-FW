@@ -1,6 +1,8 @@
 #ifndef CODESLIST_H__
 #define CODESLIST_H__
 
+#include <stdbool.h>
+
 struct cnode{
     unsigned int code;
     struct cnode* next;
@@ -34,5 +36,11 @@ void printCodesList(codes* c);
 
 //function to print nodes recursively
 void printCnodes(struct cnode* n);
+
+bool readCodes(codes* c, int id);
+
+bool compareRec(unsigned int toCompare, struct cnode* n);
+
+bool compareCodes(codes* c, codes* d);
 
 #endif
