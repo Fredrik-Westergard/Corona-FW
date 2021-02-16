@@ -29,7 +29,11 @@ int main(int argc, char const *argv[]){
     list* l = createList();     //creates linked list for phones
     readData(l, id);
     if(getAlarm(id)){
-        printf("ALARM!\n");
+        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
+        printf("vänligen ring coronaupplysningen för instruktioner.\n");
+        printf("Tryck på valfrin knapp för att fortsätta...\n\n");
+        scanf("%*c");
+        clean_stdin();
     }
     int size = printMenus(0, l);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
