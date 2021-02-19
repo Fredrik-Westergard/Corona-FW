@@ -9,13 +9,15 @@
 int main(int argc, char const *argv[]){
     bool running = true;        //boolean used to check if the main loop is running
     int number = 0;             //the level it's on
-    int id = 0;
+    int id = 0;                 //the user id
 
+    //checks if user used a valid id
     if(argc == 2){
         id = getUser(argv[1]);
         if(id == -1){
             id = 0;
             printf("Ogiltig inmatning av användare!\n");
+            printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
             exit(0);
         }
         else{
@@ -24,11 +26,14 @@ int main(int argc, char const *argv[]){
     }
     else{
         printf("Inget användar ID inmatat\n");
+        printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
         exit(0);
     }
-    codes* c = createCodesList();
-    list* l = createList();     //creates linked list for phones
-    readData(l, id);
+    codes* c = createCodesList();   //creates linked list for codes
+    list* l = createList();         //creates linked list for phones
+    readData(l, id);                //reads phones list from file
+    
+    //check if the server alarmed the user and show alarm to user
     if(getAlarm(id)){
         printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
         printf("vänligen ring coronaupplysningen för instruktioner.\n");
@@ -66,8 +71,9 @@ int main(int argc, char const *argv[]){
     }
     //writes to file
     writeData(l,id);
-    //destroys list
+    //destroys the phones list
     destroyList(l);
+    //destroys the codes list
     destroyCodes(c);
     return 0;
 }

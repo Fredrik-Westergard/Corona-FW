@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+
+//function to create codes list
 codes* createCodesList(){
     codes* c = (codes*) malloc(sizeof(codes));
     c->length = 0;
@@ -10,11 +12,13 @@ codes* createCodesList(){
     return c;
 }
 
+//function to create code node
 struct cnode* createCnode(){
     struct cnode* n = (struct cnode*) malloc(sizeof(struct cnode));
     return n;
 }
 
+//function to add code to codes list
 void addToCodes(codes* c, unsigned int code){
     struct cnode* n = createCnode();
     n->code = code;
@@ -35,11 +39,11 @@ struct cnode* getCodeIndexRecursive(struct cnode* n, int index){
     }
     return getCodeIndexRecursive(n->next, index-1);
 }
-//function to get a specific element using getIndexRecursive
+//function to get a specific element using getCodeIndexRecursive
 struct cnode* getCodeIndex(codes* c, int index){
     return getCodeIndexRecursive(c->head, index);
 }
-//function to remove item from list
+//function to remove item from codes list
 void removeFromCodes(codes* c, int index){
     if(c->head != NULL){
         if(index == 0){
@@ -60,7 +64,7 @@ void removeFromCodes(codes* c, int index){
         printf("List Error: length is 0\n");
     }
 }
-//function to destroy list
+//function to destroy codes list
 void destroyCodes(codes* c){
     if(c->head == NULL){
         free(c);
@@ -69,13 +73,13 @@ void destroyCodes(codes* c){
     removeFromCodes(c,0);
     destroyCodes(c);
 }
-//function to print the list using printNodes()
+//function to print the codes list using printCnodes()
 void printCodesList(codes* c){
     if(c->head != NULL){
         printCnodes(c->head);
     }
 }
-//function to print nodes recursively
+//function to print code nodes recursively
 void printCnodes(struct cnode* n){
     printf("%u\n", n->code);
 
@@ -85,6 +89,7 @@ void printCnodes(struct cnode* n){
     printCnodes(n->next);
 }
 
+//function to read code from openingCodes file
 bool readCodes(codes* c, int id){
     FILE* f = fopen("openingCodes","r");
 
@@ -111,6 +116,7 @@ bool readCodes(codes* c, int id){
     return false;
 }
 
+//function to compare codes recursively
 bool compareRec(unsigned int toCompare, struct cnode* n){
     if(n == NULL){
         return false;
@@ -121,6 +127,7 @@ bool compareRec(unsigned int toCompare, struct cnode* n){
     return compareRec(toCompare, n->next);
 }
 
+//function to compare nodes using compareRec()
 bool compareCodes(codes* c, codes* d){
     struct cnode* n = c->head;
     for(int i = 0; i < c->length; i++){

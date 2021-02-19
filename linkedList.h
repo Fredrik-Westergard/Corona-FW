@@ -17,7 +17,7 @@ struct node{
  */
 typedef struct{
     struct node* head;  /** the link to the first node in the list */
-    int length;
+    int length;         /** the length of the list */
 }list;
 
 /**
@@ -51,7 +51,7 @@ struct node* getIndexRecursive(struct node* n, int index);
 /**
  * function to get a certain node using getIndexRecursively
  * @param l the list
- * @param the index of the wanted node
+ * @param index the index of the wanted node
  * @returns the wanted node
  */
 struct node* getIndex(list* l, int index);
@@ -81,8 +81,20 @@ void printList(list* l);
  */
 void printNodes(struct node* n);
 
+/**
+ * function to write list to file
+ * @param l the list
+ * @param id the user id
+ * @returns true if succeded
+ */
 bool writeData(list* l, int id);
 
+/**
+ * function to read list from file
+ * @param l the list
+ * @param id the user id
+ * @returns true if suctoceded
+ */
 bool readData(list* l, int id);
 
 /**

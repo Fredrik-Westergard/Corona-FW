@@ -94,7 +94,7 @@ void printPhones(list* l){
     printf("\n");
     return;
 }
-
+//function to send alarm recursively
 void sendAlarmRec(struct node* n){
     if(n == NULL){
         return;
@@ -112,8 +112,7 @@ void sendAlarmRec(struct node* n){
         fclose(f);
     }
 }
-
-//sends alarm
+//function to send alarm
 void sendAlarm(list* l, codes* c, int id){
     codes* toCompare = createCodesList();
     bool temp = false;
@@ -262,23 +261,25 @@ int getInput(int items){
 
     }
 }
-
+//function to get the user id from command line arguments
+//function modified from stackoverflow
 int getUser(const char* argv){
-    char *c;
-
-    errno = 0;
-    long conv = strtol(argv, &c, 10);
+    char *c; //character pointer used by strtol
+    
+    errno = 0; //used for errorchecking, sometimes gives errors in vsCode?
+    long conv = strtol(argv, &c, 10); //converts string to long
 
     // Check for errors: e.g., the string does not represent an integer
     // or the integer is larger than int
     if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 6) {
         return -1;
     } else {
-        int id = conv;    
+        int id = conv; //convert long to int   
         return id;
     }
 }
 
+//function to get alarm from server
 bool getAlarm(int id){
     char loc[18] = "coronaAlarm";
     char str[7];

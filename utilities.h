@@ -6,12 +6,15 @@
 #include "codesList.h"
 
 /**
- * function to add new code 
+ * function to add new code
+ * @param l the list of phones
+ * @param c the list of codes 
  */
 void newCode(list* l, codes* c);
 
 /**
  * function to print codes
+ * @param c the codes to print
  */
 void printCodes(codes* c);
 
@@ -27,10 +30,17 @@ void newPhone(list* l);
  */
 void printPhones(list* l);
 
+/**
+ * function to send alarm recursively
+ * @param n the node
+ */
 void sendAlarmRec(struct node* n);
 
 /**
  * function to send alarm
+ * @param l the list of phones
+ * @param c the list of codes
+ * @param id the user id
  */
 void sendAlarm(list* l, codes* c,int id);
 
@@ -38,6 +48,8 @@ void sendAlarm(list* l, codes* c,int id);
  * function to print menus
  * @param menu the menu to be printed
  * @param l a linked list with phones
+ * @param c the linked list with codes
+ * @param id the user id
  * @returns the number of chices in menu
  */
 int printMenus(int menu, list* l, codes* c, int id);
@@ -54,11 +66,24 @@ int getInput(int items);
  */
 void clean_stdin(void);
 
-//gets and checks if the menu input is valid
+/**
+ * gets and checks if the menu input is valid
+ * @param items the amount of items in list
+ * @returns the chosen menu item
+ */
 int getInput(int items);
 
+/**
+ * function to get the user id from command line arguments
+ * @param argv the command line argument
+ */
 int getUser(const char* argv);
 
+/**
+ * function to get alarm from server
+ * @param id the user id
+ * @returns true if there is an alarm, false if not
+ */
 bool getAlarm(int id);
 
 #endif

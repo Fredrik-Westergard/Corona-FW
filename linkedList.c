@@ -90,6 +90,7 @@ void printNodes(struct node* n){
     printNodes(n->next);
 } 
 
+//function to write list to file
 bool writeData(list* l, int id){
     char loc[18] = "coronaSaves";
     char str[7];
@@ -111,6 +112,7 @@ bool writeData(list* l, int id){
     return false;
 }
 
+//function to read list from file
 bool readData(list* l, int id){
     char loc[18] = "coronaSaves";
     char str[7];
