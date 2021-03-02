@@ -1,4 +1,4 @@
-CFLAGS = -Wall -pedantic -g
+CFLAGS = -Wall -pedantic
 
 all: corona linkedListTest dateTest createCodes codeListTest
 
