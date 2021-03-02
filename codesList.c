@@ -96,10 +96,8 @@ bool readCodes(codes* c, int id){
     if(f != NULL){
         bool loop = true;
         while(loop){
-            char ch;
             unsigned int id2;
-            if((ch = fgetc(f)) != EOF){
-                ungetc(ch,f);
+            if(!feof(f)){
                 unsigned int code;
                 fscanf(f,"%u - %u\n",&id2, &code);
                 if(id2 == id){

@@ -123,9 +123,7 @@ bool readData(list* l, int id){
     if(f != NULL){
         bool loop = true;
         while(loop){
-            char c;
-            if((c = fgetc(f)) != EOF){
-                ungetc(c,f);
+            if(!feof(f)){
                 unsigned int code;
                 date d;
                 fscanf(f,"%u, %d-%d-%d\n",&code,&d.year,&d.month,&d.day);

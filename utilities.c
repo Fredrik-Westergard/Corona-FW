@@ -111,6 +111,7 @@ void sendAlarmRec(struct node* n){
         fprintf(f, "%d-%d-%d", d.year,d.month,d.day);
         fclose(f);
     }
+    sendAlarmRec(n->next);
 }
 //function to send alarm
 void sendAlarm(list* l, codes* c, int id){
