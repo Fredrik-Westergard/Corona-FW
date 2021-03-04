@@ -13,9 +13,11 @@ int main(int argc, char const *argv[])
 {
     date d;
     d.day = 01;
-    d.month = 02;
-    d.year = 1994;
+    d.month = 01;
+    d.year = 1970;
 
-    printf("%u\n",hash(d));
+    table* table = createTable();
+    addItem(table, d, 123456);
+    
     return 0;
 }

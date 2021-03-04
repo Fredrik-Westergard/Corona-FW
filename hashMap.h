@@ -5,11 +5,24 @@
 
 #define SIZE 131072
 
-struct hashmap{
+typedef struct item{
     date d;
-    int data;
-};
+    unsigned int data;
+    struct item* next;
+}item;
+
+typedef struct{
+    item** items;
+}table;
 
 unsigned int hash(date d);
+
+item* createItem(date d, unsigned int data);
+
+table* createTable();
+
+item* findFree(item* it);
+
+void addItem(table* t, date d, unsigned int data);
 
 #endif
