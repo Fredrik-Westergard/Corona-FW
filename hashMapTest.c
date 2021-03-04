@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
 
     printItems(table);
 
-    writeToHashMap(table, 123459);
+    writeHashMap(table, 123459);
 
     destroyHashMap(table);
 

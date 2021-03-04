@@ -45,7 +45,7 @@ void destroyHashMap(table* t);
 
 bool readToHashMap(table* t, int id);
 
-bool writeToHashMap(table* t, int id);
+bool writeHashMap(table* t, int id);
 
 void removeOldRec(table* t, item* it, date tooOld);
 

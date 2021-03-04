@@ -1,16 +1,17 @@
 #ifndef UTILITIES_H__
 #define UTILITIES_H__
 
-#include "linkedList.h"
+//#include "linkedList.h"
 #include <stdbool.h>
 #include "codesList.h"
+#include "hashMap.h"
 
 /**
  * function to add new code
  * @param l the list of phones
  * @param c the list of codes 
  */
-void newCode(list* l, codes* c);
+void newCode(table* t, codes* c);
 
 /**
  * function to print codes
@@ -22,19 +23,19 @@ void printCodes(codes* c);
  * function to add new phone to linked list
  * @param l the linked list
  */
-void newPhone(list* l);
+void newPhone(table* t);
 
 /**
  * function to print phones in linked list
  * @param l the linked list
  */
-void printPhones(list* l);
+void printPhones(table* t);
 
 /**
  * function to send alarm recursively
  * @param n the node
  */
-void sendAlarmRec(struct node* n);
+void sendAlarmRec(item* it);
 
 /**
  * function to send alarm
@@ -42,7 +43,7 @@ void sendAlarmRec(struct node* n);
  * @param c the list of codes
  * @param id the user id
  */
-void sendAlarm(list* l, codes* c,int id);
+void sendAlarm(table* t, codes* c,int id);
 
 /**
  * function to print menus
@@ -52,7 +53,7 @@ void sendAlarm(list* l, codes* c,int id);
  * @param id the user id
  * @returns the number of chices in menu
  */
-int printMenus(int menu, list* l, codes* c, int id);
+int printMenus(int menu, table* t, codes* c, int id);
 
 /**
  * function to get input

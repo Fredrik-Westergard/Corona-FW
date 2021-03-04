@@ -176,7 +176,7 @@ bool readToHashMap(table* t, int id){
     return false;
 }
 
-bool writeToHashMap(table* t, int id){
+bool writeHashMap(table* t, int id){
     char loc[18] = "coronaSaves";
     char str[7];
     sprintf(str,"%d",id);

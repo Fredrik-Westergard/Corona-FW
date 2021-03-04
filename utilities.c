@@ -4,15 +4,16 @@
 #include <math.h>
 #include "utilities.h"
 #include "date.h"
-#include "linkedList.h"
+//#include "linkedList.h"
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
 #include <stdbool.h>
 #include "codesList.h"
+#include "hashMap.h"
 
 //function to input new opening code
-void newCode(list* l, codes* c){
+void newCode(table* t, codes* c){
     unsigned int code;  //unsigned because it can't be negativce
     bool good = false;  
     printf("Mata in Öppningskoden på 8 siffror:\n");
@@ -35,8 +36,11 @@ void newCode(list* l, codes* c){
     printf("Ny kod tillagd.\n\n");
     printf("Nära telefoner de senaste 21 dagarna:\n");
     addToCodes(c, code);
-    removeTooOld(l);
-    printPhones(l);
+    //removeTooOld(l);
+    printPhones(t);
+    removeOld(t);
+    
+
 
     return;
 }
@@ -48,7 +52,7 @@ void printCodes(codes* c){
 }
 
 //function to add a new phone
-void newPhone(list* l){
+void newPhone(table* t){
     unsigned int id;    //unsigned because it can't be negative
     bool good = false;
     date d;      //date structure
@@ -80,7 +84,8 @@ void newPhone(list* l){
             printf("Ogiltig inmatning, försök igen: \n\n");
         }
     }
-    addToList(l, id, d);
+    //addToList(l, id, d);
+    addItem(t, d, id);
     printf("\nid: %6d\ndatum: ", id);
     printDateISO(d);
     printf("\n\n");
@@ -88,18 +93,19 @@ void newPhone(list* l){
     return;
 }
 //prints the phones
-void printPhones(list* l){
+void printPhones(table* t){
     printf("ID\tDatum\n");
-    printList(l);
+    //printList(l);
+    printItems(t);
     printf("\n");
     return;
 }
 //function to send alarm recursively
-void sendAlarmRec(struct node* n){
-    if(n == NULL){
+void sendAlarmRec(item* it){
+    if(it == NULL){
         return;
     }
-    int id = n->code;
+    int id = it->data;
     char loc[18] = "coronaAlarm";
     char str[7];
     sprintf(str,"%d",id);
@@ -111,17 +117,20 @@ void sendAlarmRec(struct node* n){
         fprintf(f, "%d-%d-%d", d.year,d.month,d.day);
         fclose(f);
     }
-    sendAlarmRec(n->next);
+    sendAlarmRec(it->next);
 }
 //function to send alarm
-void sendAlarm(list* l, codes* c, int id){
+void sendAlarm(table* t, codes* c, int id){
     codes* toCompare = createCodesList();
     bool temp = false;
     if(readCodes(toCompare, id)){
         if(toCompare->length != 0){
             if(compareCodes(c, toCompare)){
-                removeTooOld(l);
-                sendAlarmRec(l->head);
+                //removeTooOld(l);
+                removeOld(t);
+                for(int i = 0; i < SIZE; i++){
+                    sendAlarmRec(t->items[i]);
+                }
                 temp = true;
                 printf("Alarm skickat!\n");
             }
@@ -135,7 +144,7 @@ void sendAlarm(list* l, codes* c, int id){
     destroyCodes(toCompare);
 }
 //Prints the menus
-int printMenus(int menu, list* l, codes* c, int id){  
+int printMenus(int menu, table* t, codes* c, int id){  
     //checks if the menu number corresponds with the choice number
     //tried to make it as dynamic as possible
     if(menu == 0 || menu == 13 || menu == 23 || menu == 33 || 
@@ -182,7 +191,7 @@ int printMenus(int menu, list* l, codes* c, int id){
         printf("\t#''''''''''''''''''''#\n");
         printf("\t|   Ny öppningskod   |\n");
         printf("\t#....................#\n\n");
-        newCode(l,c);
+        newCode(t,c);
         printf("1. Bakåt.\n\n");
         return 1;
     }
@@ -200,7 +209,7 @@ int printMenus(int menu, list* l, codes* c, int id){
         printf("\t|   Ny Nära Telefon   |\n");
         printf("\t#.....................#\n\n");
         printf("Mata in ny nära telefon: \n");
-        newPhone(l);
+        newPhone(t);
         printf("1. Bakåt.\n\n");
         return 1;
     }
@@ -209,7 +218,7 @@ int printMenus(int menu, list* l, codes* c, int id){
         printf("\t|   Visa Telefoner   |\n");
         printf("\t#....................#\n\n");
         printf("Telefoner: \n");
-        printPhones(l);
+        printPhones(t);
         printf("1. Bakåt.\n\n");
         return 1;
     }
@@ -217,7 +226,7 @@ int printMenus(int menu, list* l, codes* c, int id){
         printf("\t#'''''''''''''''''''''#\n");
         printf("\t|   Nytt Smittalarm   |\n");
         printf("\t#.....................#\n\n");
-        sendAlarm(l,c,id);
+        sendAlarm(t,c,id);
         printf("1. Bakåt.\n\n");
         return 1;
     }

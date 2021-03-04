@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "utilities.h"
-#include "linkedList.h"
+//#include "linkedList.h"
 #include "codesList.h"
+#include "hashMap.h"
 
 //main function
 int main(int argc, char const *argv[]){
@@ -30,8 +31,10 @@ int main(int argc, char const *argv[]){
         exit(0);
     }
     codes* c = createCodesList();   //creates linked list for codes
-    list* l = createList();         //creates linked list for phones
-    readData(l, id);                //reads phones list from file
+    //list* l = createList();         //creates linked list for phones
+    //readData(l, id);                //reads phones list from file
+    table* t = createTable();
+    readToHashMap(t, id);
     
     //check if the server alarmed the user and show alarm to user
     if(getAlarm(id)){
@@ -41,7 +44,7 @@ int main(int argc, char const *argv[]){
         scanf("%*c");
         clean_stdin();
     }
-    int size = printMenus(0, l, c, id);  //how many menu choices there are
+    int size = printMenus(0, t, c, id);  //how many menu choices there are
     int menu = getInput(size);  //the chosen menu
 
     //menu loop
@@ -65,15 +68,17 @@ int main(int argc, char const *argv[]){
             number = (number*10)+menu;
         }
         //prints the menu and gets the number of menu choices
-        size = printMenus(number, l, c, id);
+        size = printMenus(number, t, c, id);
         //gets the menu item from user
         menu = getInput(size);
     }
     //writes to file
-    writeData(l,id);
+    //writeData(l,id);
     //destroys the phones list
-    destroyList(l);
+    //destroyList(l);
     //destroys the codes list
+    writeHashMap(t,id);
+    destroyHashMap(t);
     destroyCodes(c);
     return 0;
 }
