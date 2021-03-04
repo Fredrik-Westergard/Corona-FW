@@ -2,6 +2,8 @@
 #include "hashMap.h"
 #include "date.h"
 #include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
 
 unsigned int hash(date d){
     unsigned int toHash = ((d.year*10000)+(d.month*100)+(d.day))-19700000;
@@ -67,7 +69,7 @@ void printItemsRec(item* it){
         return;
     }
     printDateISO(it->d);
-    printf(" %u\n", it->data);
+    printf("\t%u\n", it->data);
 
     printItemsRec(it->next);
 }
@@ -113,6 +115,24 @@ void removeItem(table* t, date d, unsigned int data){
     }
 }
 
+void removeItemItem(table* t, item* it){
+    if(it != NULL){
+        item* prv = it->prev;
+        item* nxt = it->next;
+
+        if(prv != NULL){
+            prv->next = nxt;
+        }
+        else{
+            t->items[hash(it->d)] = nxt;
+        }
+        if(nxt != NULL){
+            nxt->prev = prv;
+        }
+        free(it);
+    }
+}
+
 void destroyItems(table* t, item* it){
     if(it == NULL){
         return;
@@ -127,6 +147,75 @@ void destroyHashMap(table* t){
         free(t->items[i]);
     }
     free(t);
+}
+
+bool readToHashMap(table* t, int id){
+    char loc[18] = "coronaSaves";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc,"ab+");
+
+    if(f != NULL){
+        bool loop = true;
+        while(loop){
+            if(!feof(f)){
+                unsigned int data;
+                date d;
+                fscanf(f,"%u, %d-%d-%d\n",&data,&d.year,&d.month,&d.day);
+                addItem(t,d,data);
+            }
+            else{
+                loop = false;
+            }
+        }
+        removeOld(t);
+        fclose(f);
+        return true;
+    }
+    return false;
+}
+
+bool writeToHashMap(table* t, int id){
+    char loc[18] = "coronaSaves";
+    char str[7];
+    sprintf(str,"%d",id);
+    strcat(loc, str);
+    FILE* f = fopen(loc, "wb+");
+
+    if(f != NULL){
+        removeOld(t);
+        for(int i = 0; i < SIZE; i++){
+            item* it = t->items[i];
+            while(it != NULL){
+                fprintf(f, "%d, %d-%d-%d\n", it->data, it->d.year, it->d.month, it->d.day);
+                it = it->next;
+            }
+        }
+        fclose(f);
+        return true;
+    }
+
+    return false;
+}
+
+//function to remove old phones recursively
+void removeOldRec(table* t, item* it, date tooOld){
+    if(it == NULL){
+        return;
+    }
+    if(compareDates(tooOld, it->d) > 0){
+        removeItemItem(t,it);
+    }
+    removeOldRec(t, it->next, tooOld);
+}
+//function to remove old phones using removeOldRecursive()
+void removeOld(table* t){
+    for(int i = 0; i<SIZE; i++){
+        if(t->items[i] != NULL){
+            removeOldRec(t, t->items[i], getDateNumBefore(getTodaysDate(),21));
+        }
+    }
 }
 
 

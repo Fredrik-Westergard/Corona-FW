@@ -30,7 +30,7 @@ int main(int argc, char const *argv[])
     g.day = 31;
     g.month = 12;
     g.year = 2800;
-    
+
     table* table = createTable();
     addItem(table, d, 123456);
     addItem(table, e, 123457);
@@ -46,6 +46,12 @@ int main(int argc, char const *argv[])
     removeItem(table, e, 123457);
     printf("\n");
     printItems(table);
+
+    readToHashMap(table, 123456);
+
+    printItems(table);
+
+    writeToHashMap(table, 123459);
 
     destroyHashMap(table);
 
