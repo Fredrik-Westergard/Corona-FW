@@ -1,6 +1,6 @@
 CFLAGS = -Wall -pedantic
 
-all: corona linkedListTest dateTest createCodes codeListTest
+all: corona linkedListTest dateTest createCodes codeListTest hashMapTest
 
 corona: main.o utilities.o date.o linkedList.o codesList.o
 	gcc $(CFLAGS) main.o utilities.o date.o linkedList.o codesList.o -o corona -lm
@@ -13,6 +13,9 @@ linkedListTest: linkedList.o date.o
 
 codeListTest: codeListTest.c codesList.o
 	gcc $(CFLAGS) codeListTest.c codesList.o -o codeListTest
+
+hashMapTest: hashMapTest.c hashMap.o date.o
+	gcc $(CFLAGS) hashMapTest.c hashMap.o date.o -o hashMapTest
 
 main.o: main.c utilities.h date.h linkedList.h codesList.h
 	gcc $(CFLAGS) -c main.c -o main.o
@@ -28,6 +31,9 @@ linkedList.o: linkedList.c linkedList.h
 
 codesList.o: codesList.c codesList.h
 	gcc $(CFLAGS) -c codesList.c -o codesList.o
+
+hashMap.o: hashMap.c hashMap.h date.o
+	gcc $(CFLAGS) -c hashMap.c -o hashMap.o
 
 createCodes:
 	gcc $(CFLAGS) createCodes.c -o createCodes
