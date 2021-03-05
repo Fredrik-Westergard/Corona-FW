@@ -1,14 +1,20 @@
-CFLAGS = -Wall -pedantic -g
+CFLAGS = -Wall -pedantic
+
+ifeq ($(OS),Windows_NT)
+	RM = del
+else
+	RM = rm
+endif
 
 all: corona linkedListTest dateTest createCodes codeListTest hashMapTest
 
 corona: main.o utilities.o date.o codesList.o hashMap.o
 	gcc $(CFLAGS) main.o utilities.o date.o codesList.o hashMap.o -o corona -lm
 
-dateTest: date.o
+dateTest: date.o dateTest.c
 	gcc $(CFLAGS) dateTest.c date.o -o dateTest
 
-linkedListTest: linkedList.o date.o
+linkedListTest: linkedList.o date.o linkedTest.c
 	gcc $(CFLAGS) linkedTest.c linkedList.o date.o -o linkedListTest -lm
 
 codeListTest: codeListTest.c codesList.o
@@ -17,10 +23,10 @@ codeListTest: codeListTest.c codesList.o
 hashMapTest: hashMapTest.c hashMap.o date.o
 	gcc $(CFLAGS) hashMapTest.c hashMap.o date.o -o hashMapTest -lm
 
-main.o: main.c utilities.c date.c codesList.c hashMap.c utilities.h date.h codesList.h hashMap.h
+main.o: main.c utilities.o date.o codesList.o hashMap.o
 	gcc $(CFLAGS) -c main.c -o main.o
 
-utilities.o: utilities.c utilities.h date.c codesList.c codesList.c hashMap.c date.h codesList.h codesList.h hashMap.h
+utilities.o: utilities.c utilities.h date.o codesList.o hashMap.o
 	gcc $(CFLAGS) -c utilities.c -o utilities.o
 
 date.o: date.c date.h
@@ -39,4 +45,4 @@ createCodes:
 	gcc $(CFLAGS) createCodes.c -o createCodes
 
 clean:
-	-rm *.o
+	-$(RM) *.o

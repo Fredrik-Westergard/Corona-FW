@@ -25,9 +25,9 @@ int main(int argc, char const *argv[]){
     
     //check if the server alarmed the user and show alarm to user
     if(getAlarm(id)){
-        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
-        printf("vänligen ring coronaupplysningen för instruktioner.\n");
-        printf("Tryck på valfrin knapp för att fortsätta...\n\n");
+        printf("ALARM: you have been in close proximity to someone with covid-19,\n");
+        printf("please contact the corona information number at +358 457 00 0000.\n");
+        printf("Pres any key and enter to continue...\n\n");
         scanf("%*c");
         clean_stdin();
     }

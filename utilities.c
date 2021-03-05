@@ -14,7 +14,7 @@
 void newCode(table* t, codes* c){
     unsigned int code;  //unsigned because it can't be negativce
     bool good = false;  
-    printf("Mata in Öppningskoden på 8 siffror:\n");
+    printf("Enter opening code of 8 digits:\n");
     while(!good){
         scanf("%u", &code);
         clean_stdin();
@@ -27,12 +27,12 @@ void newCode(table* t, codes* c){
             good = true;
         }
         else{
-            printf("Ogiltig inmatning, försök igen: \n\n");
+            printf("Invalid input, try again: \n\n");
         }
     }
-    printf("öppningskod: %8d\n", code);
-    printf("Ny kod tillagd.\n\n");
-    printf("Nära telefoner de senaste 21 dagarna:\n");
+    printf("Opening code: %8d\n", code);
+    printf("New code added.\n\n");
+    printf("Close proximity phones for the last 21 days:\n");
     addToCodes(c, code);
     //removeTooOld(l);
     printPhones(t);
@@ -44,7 +44,6 @@ void newCode(table* t, codes* c){
 }
 //funtion to print the stored codes
 void printCodes(codes* c){
-    printf("koder:\n");
     printCodesList(c);
     return;
 }
@@ -55,7 +54,7 @@ void newPhone(table* t){
     bool good = false;
     date d;      //date structure
 
-    printf("Mata in identifikationskod på 6 siffror: \n");
+    printf("Enter identfication code of 6 digits: \n");
     while(!good){
         scanf("%u", &id);
         clean_stdin();
@@ -67,10 +66,10 @@ void newPhone(table* t){
             good = true;
         }
         else{
-            printf("Ogiltig inmatning, försök igen: \n\n");
+            printf("Invalid input, try again: \n\n");
         }
     }
-    printf("Mata in datum i YYYY-MM-DD format\n");
+    printf("Enter date with YYYY-MM-DD format\n");
     while(good){
         scanf("%d-%d-%d", &d.year, &d.month, &d.day);
         clean_stdin();
@@ -79,20 +78,20 @@ void newPhone(table* t){
             good = false;
         }
         else{
-            printf("Ogiltig inmatning, försök igen: \n\n");
+            printf("Invalid input, try again: \n\n");
         }
     }
     //addToList(l, id, d);
     addItem(t, d, id);
-    printf("\nid: %6d\ndatum: ", id);
+    printf("\nID: %6d\nDate: ", id);
     printDateISO(d);
     printf("\n\n");
-    printf("Ny telefon tillagd.\n");
+    printf("New phone added.\n");
     return;
 }
 //prints the phones
 void printPhones(table* t){
-    printf("ID\tDatum\n");
+    printf("ID\tDate\n");
     //printList(l);
     printItems(t);
     printf("\n");
@@ -130,13 +129,13 @@ void sendAlarm(table* t, codes* c, int id){
                     sendAlarmRec(t->items[i]);
                 }
                 temp = true;
-                printf("Alarm skickat!\n");
+                printf("Alarm sent!\n");
             }
         }
     }
 
     if(!temp){
-        printf("Alarm misslyckades, vänligen mata in giltig öppningskod!\n");
+        printf("Alarm failed, please input a valid opening code!\n");
     }
 
     destroyCodes(toCompare);
@@ -149,94 +148,94 @@ int printMenus(int menu, table* t, codes* c, int id){
         menu == 111 || menu == 121 || menu == 211 || menu == 221 || menu == 311){
 
         printf("\t#'''''''''''''''''''#\n");
-        printf("\t|  Coronablinkern!  |\n");
+        printf("\t|  Corona Blinker!  |\n");
         printf("\t#...................#\n\n");
-        printf("1. Mata in öppningskod.\n");
-        printf("2. Mata in identifikationskod och datum för en nära telefon.\n");
-        printf("3. Skicka eller ta emot smittalarm.\n");
-        printf("4. Avsluta\n\n");
+        printf("1. Enter opening code.\n");
+        printf("2. Enter identification code and date for a phone.\n");
+        printf("3. Send or receive an alarm.\n");
+        printf("4. Exit\n\n");
         return 4;
     }
     else if(menu == 1){
         printf("\t#''''''''''''''''''''''''#\n");
-        printf("\t|  Mata In Öppningskod!  |\n");
+        printf("\t|   Enter Opening Code!  |\n");
         printf("\t#........................#\n\n");
-        printf("1. Ny öppningskod.\n");
-        printf("2. Visa öppningskoder.\n");
-        printf("3. Bakåt.\n\n");
+        printf("1. New opening code.\n");
+        printf("2. Show opening codes.\n");
+        printf("3. Back.\n\n");
         return 3;
     }
     else if(menu == 2){
-        printf("\t#'''''''''''''''''''''''''''''''''''''''''#\n");
-        printf("\t|  Mata in identifikationskod och datum   |\n");   
-        printf("\t|          för en nära telefon!           |\n");
-        printf("\t#.........................................#\n\n");
-        printf("1. Ny nära telefon.\n");
-        printf("2. Visa telefoner.\n");
-        printf("3. Bakåt.\n\n");
+        printf("\t#'''''''''''''''''''''''''''''''''''''''#\n");
+        printf("\t|   Enter identification code and date  |\n");   
+        printf("\t|              for a phone!             |\n");
+        printf("\t#.......................................#\n\n");
+        printf("1. New close phone\n");
+        printf("2. Show phones.\n");
+        printf("3. Back.\n\n");
         return 3;
     }
     else if(menu == 3){
         printf("\t#'''''''''''''''''''''''''''''''''''''#\n");
-        printf("\t|   Ta skicka eller emot smittalarm   |\n");
+        printf("\t|      Send or receive new alarm      |\n");
         printf("\t#.....................................#\n\n");
-        printf("1. Nytt smittalarm.\n");
-        printf("2. Sök efter smittlarm.\n");
-        printf("3. Bakåt.\n\n");
+        printf("1. New alarm.\n");
+        printf("2. Search for alarm.\n");
+        printf("3. Back.\n\n");
         return 3;
     }
     else if(menu == 11){
-        printf("\t#''''''''''''''''''''#\n");
-        printf("\t|   Ny öppningskod   |\n");
-        printf("\t#....................#\n\n");
+        printf("\t#''''''''''''''''''''''#\n");
+        printf("\t|   New opening code   |\n");
+        printf("\t#......................#\n\n");
         newCode(t,c);
-        printf("1. Bakåt.\n\n");
+        printf("1. Back.\n\n");
         return 1;
     }
     else if(menu == 12){
-        printf("\t#''''''''''''''''''''''#\n");
-        printf("\t|   Visa öppningskod   |\n");
-        printf("\t#......................#\n\n");
-        printf("Öppningskoder: \n");
+        printf("\t#''''''''''''''''''''''''#\n");
+        printf("\t|   Show opening codes   |\n");
+        printf("\t#........................#\n\n");
+        printf("Opening codes: \n");
         printCodes(c);
-        printf("1. Bakåt.\n\n");
+        printf("1. Back.\n\n");
         return 1;
     }
     else if(menu == 21){
-        printf("\t#''''''''''''''''''''#\n");
-        printf("\t|   Ny Nära Telefon   |\n");
+        printf("\t#'''''''''''''''''''''#\n");
+        printf("\t|   New close phone   |\n");
         printf("\t#.....................#\n\n");
-        printf("Mata in ny nära telefon: \n");
+        printf("Enter new phone: \n");
         newPhone(t);
-        printf("1. Bakåt.\n\n");
+        printf("1. Back.\n\n");
         return 1;
     }
     else if(menu == 22){
-        printf("\t#''''''''''''''''''''#\n");
-        printf("\t|   Visa Telefoner   |\n");
-        printf("\t#....................#\n\n");
-        printf("Telefoner: \n");
+        printf("\t#'''''''''''''''''''''#\n");
+        printf("\t|     Show phones     |\n");
+        printf("\t#.....................#\n\n");
+        printf("Phones: \n");
         printPhones(t);
-        printf("1. Bakåt.\n\n");
+        printf("1. Back.\n\n");
         return 1;
     }
     else if(menu == 31){
         printf("\t#'''''''''''''''''''''#\n");
-        printf("\t|   Nytt Smittalarm   |\n");
+        printf("\t|      New alarm      |\n");
         printf("\t#.....................#\n\n");
         sendAlarm(t,c,id);
         printf("1. Bakåt.\n\n");
         return 1;
     }
     else if(menu == 32){
-        printf("\t#''''''''''''''''''''''''''''#\n");
-        printf("\t|   Söker efter Smittalarm   |\n");
-        printf("\t#............................#\n\n");
+        printf("\t#''''''''''''''''''''''#\n");
+        printf("\t|   Search for alarm   |\n");
+        printf("\t#......................#\n\n");
         if(getAlarm(id)){
-        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
-        printf("vänligen ring coronaupplysningen för instruktioner.\n");
+        printf("ALARM: you have been in close proximity to someone with covid-19,\n");
+        printf("please contact the corona information number at +358 457 00 0000.\n");
         }
-        printf("1. Bakåt.\n\n");
+        printf("1. Back.\n\n");
         return 1;
     }
     return 0;
@@ -259,11 +258,11 @@ int getInput(int items){
                 return input;
             }
             else{
-                printf("Ogiltig inmatning, försök igen: \n\n");
+                printf("Invalid input, try again: \n\n");
             }
         }
         else{
-            printf("Ogiltig inmatning, försök igen: \n\n");
+            printf("Invalid input, try again: \n\n");
         }
         clean_stdin();
 
@@ -330,36 +329,43 @@ int checkArgs(int argc, const char* argv[]){
     if(argc >= 2){
         id = getUser(argv[1]);
         if(id == -1){
-            id = 0;
-            printf("Ogiltig inmatning av användare!\n");
-            printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
+            if(strcmp(argv[1], "help") == 0){
+                printf("usage:\n");
+                printf("corona help\t\t\t\t\tdisplay this help text\n");
+                printf("corona ~userID~\t\t\t\t\tdefault usage, replace ~userID~ with your six digit user ID\n");
+                printf("corona ~userID~ debug\t\t\t\tenter debug mode\n");
+                printf("corona ~userID~ check\t\t\t\tchecks for alarms\n");
+                printf("corona ~userID~ sick ~opening code~\t\tsends alarm, replace ~opening~ code with your opening code\n");
+                printf("corona ~userID~ add ~userID2~ ~date~\t\tadds phone to phone list, replace ~userID2~ with the second user ID and ~date~ with a valid date\n");
+            }
+            else{
+                id = 0;
+                printf("Invalid input of user ID!\n");
+                printf("Please input a valid user ID of six digits.\n");
+            }
             exit(0);
         }
         else{
             if(argc == 2){
-                printf("Välkommen användare %d\n\n", id);
+                printf("Welcome user %d\n\n", id);
                 return id;
             }
             else if(argc == 3){
                 if(strcmp(argv[2], "debug") == 0){
                     #define DEBUG
-                    printf("Välkommen användare %d\n\n", id);
+                    printf("Welcome user %d\n\n", id);
                     printf("debug on\n\n");
                     return id;
-                }
-                else if(strcmp(argv[2], "help") == 0){
-                    printf("hjälp text\n");
-                    exit(0);
                 }
                 else if(strcmp(argv[2], "check") == 0){
                     table* t = createTable();
                     readToHashMap(t, id);
                     if(getAlarm(id)){
-                        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
-                        printf("vänligen ring coronaupplysningen för instruktioner.\n");
+                        printf("ALARM: you have been in close proximity to someone with covid-19,\n");
+                        printf("please contact the corona information number at +358 457 00 0000.\n");
                     }
                     else{
-                        printf("inget alarm!\n");
+                        printf("No alarm!\n");
                     }
                     destroyHashMap(t);
                     exit(0);
@@ -403,8 +409,8 @@ int checkArgs(int argc, const char* argv[]){
         }
     }
     else{
-        printf("Inget användar ID inmatat\n");
-        printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
+        printf("No user ID\n");
+        printf("Pleas input a valid user ID as a command line argument.\n");
         exit(0);
     }
     exit(0);
