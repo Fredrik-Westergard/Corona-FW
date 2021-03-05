@@ -17,10 +17,10 @@ codeListTest: codeListTest.c codesList.o
 hashMapTest: hashMapTest.c hashMap.o date.o
 	gcc $(CFLAGS) hashMapTest.c hashMap.o date.o -o hashMapTest
 
-main.o: main.c utilities.h date.h codesList.h hashMap.h
+main.o: main.c utilities.c date.c codesList.c hashMap.c utilities.h date.h codesList.h hashMap.h
 	gcc $(CFLAGS) -c main.c -o main.o
 
-utilities.o: utilities.c utilities.h date.h codesList.c codesList.h hashMap.h
+utilities.o: utilities.c utilities.h date.c codesList.c codesList.c hashMap.c date.h codesList.h codesList.h hashMap.h
 	gcc $(CFLAGS) -c utilities.c -o utilities.o
 
 date.o: date.c date.h

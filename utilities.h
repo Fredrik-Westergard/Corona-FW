@@ -80,11 +80,17 @@ int getInput(int items);
  */
 int getUser(const char* argv);
 
+unsigned int getCode(const char* argv);
+
+int checkArgs(int argc, const char* argv[]);
+
 /**
  * function to get alarm from server
  * @param id the user id
  * @returns true if there is an alarm, false if not
  */
 bool getAlarm(int id);
+
+void parseDate(date* d, const char* argv);
 
 #endif

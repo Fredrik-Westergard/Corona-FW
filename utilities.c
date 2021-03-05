@@ -281,11 +281,29 @@ int getUser(const char* argv){
 
     // Check for errors: e.g., the string does not represent an integer
     // or the integer is larger than int
-    if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 6) {
+    if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 6 || conv < 0) {
         return -1;
     } else {
         int id = conv; //convert long to int   
         return id;
+    }
+}
+
+//function to get the user id from command line arguments
+//function modified from stackoverflow
+unsigned int getCode(const char* argv){
+    char *c; //character pointer used by strtol
+    
+    errno = 0; //used for errorchecking, sometimes gives errors in vsCode?
+    long conv = strtol(argv, &c, 10); //converts string to long
+
+    // Check for errors: e.g., the string does not represent an integer
+    // or the integer is larger than int
+    if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 8 || conv < 0) {
+        return -1;
+    } else {
+        unsigned int code = conv; //convert long to int   
+        return code;
     }
 }
 
@@ -307,4 +325,106 @@ bool getAlarm(int id){
         fclose(f);
     }
     return false;
+}
+
+int checkArgs(int argc, const char* argv[]){
+    int id = 0;
+    if(argc >= 2){
+        id = getUser(argv[1]);
+        if(id == -1){
+            id = 0;
+            printf("Ogiltig inmatning av användare!\n");
+            printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
+            exit(0);
+        }
+        else{
+            if(argc == 2){
+                printf("Välkommen användare %d\n\n", id);
+                return id;
+            }
+            else if(argc == 3){
+                if(strcmp(argv[2], "debug") == 0){
+                    #define DEBUG
+                    printf("Välkommen användare %d\n\n", id);
+                    printf("debug on\n\n");
+                    return id;
+                }
+                else if(strcmp(argv[2], "help") == 0){
+                    printf("hjälp text\n");
+                    exit(0);
+                }
+                else if(strcmp(argv[2], "check") == 0){
+                    table* t = createTable();
+                    readToHashMap(t, id);
+                    if(getAlarm(id)){
+                        printf("ALARM: Du har varit i närheten av någon med covid-19,\n");
+                        printf("vänligen ring coronaupplysningen för instruktioner.\n");
+                    }
+                    else{
+                        printf("inget alarm!\n");
+                    }
+                    destroyHashMap(t);
+                    exit(0);
+                }
+            }
+            else if(argc == 4){
+                if(strcmp(argv[2], "sick") == 0){
+                    unsigned int code = getCode(argv[3]);
+                    if(code != -1){
+                        table* t = createTable();
+                        codes* c = createCodesList();
+                        readToHashMap(t, id);
+                        addToCodes(c, code);
+                        sendAlarm(t,c,id);
+                        destroyCodes(c);
+                        destroyHashMap(t);
+                    }
+                }
+                exit(0);
+            }
+            else if(argc == 5){
+                if(strcmp(argv[2], "add") == 0){
+                    date d;
+                    parseDate(&d, argv[3]);
+                    int user = getUser(argv[4]);
+                    if(user != -1){
+                        table* t = createTable();
+                        readToHashMap(t, id);
+                        addItem(t, d, user);
+                        printPhones(t);
+                        writeHashMap(t, id);
+                        destroyHashMap(t);
+                    }
+                    
+                }
+                exit(0);
+            }
+            else{
+                exit(0);
+            }          
+        }
+    }
+    else{
+        printf("Inget användar ID inmatat\n");
+        printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
+        exit(0);
+    }
+    exit(0);
+}
+
+void parseDate(date* d, const char* argv){
+    if(strlen(argv) == 10){
+        date e;
+        e.year = (((*argv)-48)*1000)+(((*(argv+1))-48)*100)+(((*(argv+2))-48)*10)+(((*(argv+3))-48));
+        e.month = (((*(argv+5))-48)*10)+((*(argv+6))-48);
+        e.day = (((*(argv+8))-48)*10)+((*(argv+9))-48);
+        if(checkDate(e)){
+            d->year = e.year;
+            d->month = e.month;
+            d->day = e.day;
+        }
+        else{
+            exit(0);
+        }
+    }
 }

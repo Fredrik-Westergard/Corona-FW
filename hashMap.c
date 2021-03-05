@@ -68,8 +68,10 @@ void printItemsRec(item* it){
     if(it == NULL){
         return;
     }
+    
+    printf("%u\t", it->data);
     printDateISO(it->d);
-    printf("\t%u\n", it->data);
+    printf("\n");
 
     printItemsRec(it->next);
 }
@@ -137,8 +139,8 @@ void destroyItems(table* t, item* it){
     if(it == NULL){
         return;
     }
-    destroyItems(t, it->next);
     removeItem(t, it->d, it->data);
+    destroyItems(t, it->next);
 }
 
 void destroyHashMap(table* t){

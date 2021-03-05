@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "utilities.h"
-//#include "linkedList.h"
 #include "codesList.h"
 #include "hashMap.h"
+
+
 
 //main function
 int main(int argc, char const *argv[]){
@@ -12,23 +13,9 @@ int main(int argc, char const *argv[]){
     int number = 0;             //the level it's on
     int id = 0;                 //the user id
 
-    //checks if user used a valid id
-    if(argc == 2){
-        id = getUser(argv[1]);
-        if(id == -1){
-            id = 0;
-            printf("Ogiltig inmatning av användare!\n");
-            printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
-            exit(0);
-        }
-        else{
-            printf("Välkommen användare %d\n\n", id);
-        }
-    }
-    else{
-        printf("Inget användar ID inmatat\n");
-        printf("Mata in användar ID på sex siffror som kommandoprompt parameter.\n");
-        exit(0);
+    id = checkArgs(argc, argv);
+    if(id == -1){
+        return 1;
     }
     codes* c = createCodesList();   //creates linked list for codes
     //list* l = createList();         //creates linked list for phones
