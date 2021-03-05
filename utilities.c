@@ -4,11 +4,9 @@
 #include <math.h>
 #include "utilities.h"
 #include "date.h"
-//#include "linkedList.h"
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
-#include <stdbool.h>
 #include "codesList.h"
 #include "hashMap.h"
 
@@ -410,21 +408,4 @@ int checkArgs(int argc, const char* argv[]){
         exit(0);
     }
     exit(0);
-}
-
-void parseDate(date* d, const char* argv){
-    if(strlen(argv) == 10){
-        date e;
-        e.year = (((*argv)-48)*1000)+(((*(argv+1))-48)*100)+(((*(argv+2))-48)*10)+(((*(argv+3))-48));
-        e.month = (((*(argv+5))-48)*10)+((*(argv+6))-48);
-        e.day = (((*(argv+8))-48)*10)+((*(argv+9))-48);
-        if(checkDate(e)){
-            d->year = e.year;
-            d->month = e.month;
-            d->day = e.day;
-        }
-        else{
-            exit(0);
-        }
-    }
 }

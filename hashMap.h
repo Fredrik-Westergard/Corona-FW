@@ -51,4 +51,6 @@ void removeOldRec(table* t, item* it, date tooOld);
 
 void removeOld(table* t);
 
+unsigned int parseUser(char* toParse);
+
 #endif

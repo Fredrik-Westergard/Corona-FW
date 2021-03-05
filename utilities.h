@@ -91,6 +91,5 @@ int checkArgs(int argc, const char* argv[]);
  */
 bool getAlarm(int id);
 
-void parseDate(date* d, const char* argv);
 
 #endif

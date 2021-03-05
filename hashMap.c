@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include "utilities.h"
+#include <limits.h>
+#include <errno.h>
+#include <math.h>
 
 unsigned int hash(date d){
     unsigned int toHash = ((d.year*10000)+(d.month*100)+(d.day))-19700000;
@@ -161,11 +165,31 @@ bool readToHashMap(table* t, int id){
     if(f != NULL){
         bool loop = true;
         while(loop){
-            if(!feof(f)){
-                unsigned int data;
-                date d;
-                fscanf(f,"%u, %d-%d-%d\n",&data,&d.year,&d.month,&d.day);
-                addItem(t,d,data);
+            unsigned int data;
+            date d;
+            //fscanf(f,"%u, %d-%d-%d\n",&data,&d.year,&d.month,&d.day);
+            char fullChar[17];
+            char dataChar[7];
+            char dateChar[11];
+            int read = fread(fullChar,sizeof(char),16,f);
+            
+            if(read > 0){
+                for(int i = 0; i < 6; i++){
+                    dataChar[i] = fullChar[i];
+                }
+                dataChar[6] = '\0';
+                for(int i = 6; i < 17; i++){
+                    dateChar[i-6] = fullChar[i];
+                }
+                dateChar[10] = '\0';
+
+                data = parseUser(dataChar);
+                if(data != -1){
+                    parseDate(&d, dateChar);
+                    if(checkDate(d)){
+                        addItem(t,d,data);
+                    }
+                }
             }
             else{
                 loop = false;
@@ -190,7 +214,9 @@ bool writeHashMap(table* t, int id){
         for(int i = 0; i < SIZE; i++){
             item* it = t->items[i];
             while(it != NULL){
-                fprintf(f, "%d, %d-%d-%d\n", it->data, it->d.year, it->d.month, it->d.day);
+                char buffer[17];
+                sprintf(buffer, "%u%04d-%02d-%02d",it->data, it->d.year, it->d.month, it->d.day);
+                fwrite(buffer,sizeof(char),16,f);
                 it = it->next;
             }
         }
@@ -217,6 +243,23 @@ void removeOld(table* t){
         if(t->items[i] != NULL){
             removeOldRec(t, t->items[i], getDateNumBefore(getTodaysDate(),21));
         }
+    }
+}
+
+//function to get the user id from command line arguments
+//function modified from stackoverflow
+unsigned int parseUser(char* toParse){
+    char *c; //character pointer used by strtol
+    
+    errno = 0; //used for errorchecking, sometimes gives errors in vsCode?
+    long conv = strtol(toParse, &c, 10); //converts string to long
+    // Check for errors: e.g., the string does not represent an integer
+    // or the integer is larger than int
+    if (errno != 0 || *c != '\0' || conv > INT_MAX || floor(log10(abs(conv)))+1 != 6 || conv < 0) {
+        return -1;
+    } else {
+        unsigned int user = (unsigned int) conv; //convert long to int   
+        return user;
     }
 }
 

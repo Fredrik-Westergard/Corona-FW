@@ -15,7 +15,7 @@ codeListTest: codeListTest.c codesList.o
 	gcc $(CFLAGS) codeListTest.c codesList.o -o codeListTest
 
 hashMapTest: hashMapTest.c hashMap.o date.o
-	gcc $(CFLAGS) hashMapTest.c hashMap.o date.o -o hashMapTest
+	gcc $(CFLAGS) hashMapTest.c hashMap.o date.o -o hashMapTest -lm
 
 main.o: main.c utilities.c date.c codesList.c hashMap.c utilities.h date.h codesList.h hashMap.h
 	gcc $(CFLAGS) -c main.c -o main.o

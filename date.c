@@ -4,6 +4,7 @@
 #include "date.h"
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 
 //fuction to check wether a date is valid
@@ -135,3 +136,19 @@ date getTodaysDate(){
     return d;
 }
 
+void parseDate(date* d, const char* argv){
+    if(strlen(argv) == 10){
+        date e;
+        e.year = (((*argv)-48)*1000)+(((*(argv+1))-48)*100)+(((*(argv+2))-48)*10)+(((*(argv+3))-48));
+        e.month = (((*(argv+5))-48)*10)+((*(argv+6))-48);
+        e.day = (((*(argv+8))-48)*10)+((*(argv+9))-48);
+        if(checkDate(e)){
+            d->year = e.year;
+            d->month = e.month;
+            d->day = e.day;
+        }
+        else{
+            exit(0);
+        }
+    }
+}

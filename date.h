@@ -67,4 +67,7 @@ int compareDates(date d1, date d2);
  */
 date getTodaysDate();
 
+
+void parseDate(date* d, const char* argv);
+
 #endif
