@@ -41,8 +41,8 @@ codesList.o: codesList.c codesList.h
 hashMap.o: hashMap.c hashMap.h date.o
 	gcc $(CFLAGS) -c hashMap.c -o hashMap.o
 
-createCodes:
-	gcc $(CFLAGS) createCodes.c -o createCodes
+createCodes: createCodes.c
+	gcc $(CFLAGS) createCodes.c -o createCodes -lm
 
 clean:
 	-$(RM) *.o
