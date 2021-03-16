@@ -336,7 +336,7 @@ int checkArgs(int argc, const char* argv[]){
                 printf("corona ~userID~ debug\t\t\t\tenter debug mode\n");
                 printf("corona ~userID~ check\t\t\t\tchecks for alarms\n");
                 printf("corona ~userID~ sick ~opening code~\t\tsends alarm, replace ~opening~ code with your opening code\n");
-                printf("corona ~userID~ add ~userID2~ ~date~\t\tadds phone to phone list, replace ~userID2~ with the second user ID and ~date~ with a valid date\n");
+                printf("corona ~userID~ add ~date~ ~userID2~\t\tadds phone to phone list, replace ~date~ with a valid date and ~userID2~ with the second user ID\n");
             }
             else{
                 id = 0;
@@ -398,6 +398,9 @@ int checkArgs(int argc, const char* argv[]){
                         printPhones(t);
                         writeHashMap(t, id);
                         destroyHashMap(t);
+                    }
+                    else{
+                        printf("Error: please check your user IDs or date\n");
                     }
                     
                 }

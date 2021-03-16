@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/corona",
-            "args": ["123456", "add", "2021-03-01", "123457"],
+            "args": ["123456"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
