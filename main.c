@@ -18,8 +18,6 @@ int main(int argc, char const *argv[]){
         return 1;
     }
     codes* c = createCodesList();   //creates linked list for codes
-    //list* l = createList();         //creates linked list for phones
-    //readData(l, id);                //reads phones list from file
     table* t = createTable();
     readToHashMap(t, id);
     
@@ -36,10 +34,10 @@ int main(int argc, char const *argv[]){
 
     //menu loop
     while(running){
-        //if the user chose "bakåt" or "avsluta", 
+        //if the user chose "back" or "exit", 
         //they have to be the last choice
         if(size == menu){
-            //if the user chose "avsluta"
+            //if the user chose "exit"
             if(number == 0){
                 break;
             }
@@ -59,11 +57,6 @@ int main(int argc, char const *argv[]){
         //gets the menu item from user
         menu = getInput(size);
     }
-    //writes to file
-    //writeData(l,id);
-    //destroys the phones list
-    //destroyList(l);
-    //destroys the codes list
     writeHashMap(t,id);
     destroyHashMap(t);
     destroyCodes(c);

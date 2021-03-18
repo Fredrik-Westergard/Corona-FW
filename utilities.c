@@ -324,6 +324,7 @@ bool getAlarm(int id){
     return false;
 }
 
+//function to check user input from commandline
 int checkArgs(int argc, const char* argv[]){
     int id = 0;
     if(argc >= 2){

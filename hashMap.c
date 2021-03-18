@@ -9,11 +9,16 @@
 #include <errno.h>
 #include <math.h>
 
+//function to get a hash
+//should work with dates between 1970-01-01 and a distant future date
+// may cause errors for grandchildrens grandchildren
+
 unsigned int hash(date d){
     unsigned int toHash = ((d.year*10000)+(d.month*100)+(d.day))-19700000;
     return toHash;
 }
 
+//creates item
 item* createItem(date d, unsigned int data){
     item* it = (item*) malloc(sizeof(item));
     it->d = d;
@@ -23,6 +28,7 @@ item* createItem(date d, unsigned int data){
     return it;
 }
 
+//creates hash table
 table* createTable(){
     table* t = (table*) malloc(sizeof(table));
     t->items = (item**) malloc(sizeof(item*)*SIZE);
@@ -34,6 +40,7 @@ table* createTable(){
     return t;
 }
 
+//finds open space in hashmap
 item* findFree(item* it, unsigned int data){
     if(it->next == NULL){
         return it;
@@ -44,6 +51,7 @@ item* findFree(item* it, unsigned int data){
     return it;
 }
 
+//adds item to hashmap
 void addItem(table* t, date d, unsigned int data){
     unsigned int hashed = hash(d);
     item* it = createItem(d,data);
@@ -68,6 +76,7 @@ void addItem(table* t, date d, unsigned int data){
     }
 }
 
+//prints items recursively
 void printItemsRec(item* it){
     if(it == NULL){
         return;
@@ -80,12 +89,14 @@ void printItemsRec(item* it){
     printItemsRec(it->next);
 }
 
+//prints items
 void printItems(table* t){
     for(int i = 0; i < SIZE; i++){
         printItemsRec(t->items[i]);
     }
 }
 
+//gets item recursively
 item* getItemRec(item* it, unsigned int data){
     if(it == NULL){
         return NULL;
@@ -97,10 +108,12 @@ item* getItemRec(item* it, unsigned int data){
     return getItemRec(it->next,data);
 }
 
+//gets item 
 item* getItem(table* t, date d, unsigned int data){
     return getItemRec(t->items[hash(d)], data);
 }
 
+//removes item
 void removeItem(table* t, date d, unsigned int data){
     item* it = getItem(t, d, data);
 
@@ -121,6 +134,7 @@ void removeItem(table* t, date d, unsigned int data){
     }
 }
 
+//removes item with item
 void removeItemItem(table* t, item* it){
     if(it != NULL){
         item* prv = it->prev;
@@ -139,6 +153,7 @@ void removeItemItem(table* t, item* it){
     }
 }
 
+//destroys item 
 void destroyItems(table* t, item* it){
     if(it == NULL){
         return;
@@ -147,6 +162,7 @@ void destroyItems(table* t, item* it){
     destroyItems(t, it->next);
 }
 
+// destroys hashmap 
 void destroyHashMap(table* t){
     for(int i = 0; i < SIZE; i++){
         destroyItems(t, t->items[i]);
@@ -155,6 +171,7 @@ void destroyHashMap(table* t){
     free(t);
 }
 
+// reads from file to hashmap
 bool readToHashMap(table* t, int id){
     char loc[18] = "coronaSaves";
     char str[7];
@@ -167,7 +184,6 @@ bool readToHashMap(table* t, int id){
         while(loop){
             unsigned int data;
             date d;
-            //fscanf(f,"%u, %d-%d-%d\n",&data,&d.year,&d.month,&d.day);
             char fullChar[17];
             char dataChar[7];
             char dateChar[11];
@@ -202,6 +218,7 @@ bool readToHashMap(table* t, int id){
     return false;
 }
 
+// writes from hashmap to file 
 bool writeHashMap(table* t, int id){
     char loc[18] = "coronaSaves";
     char str[7];
