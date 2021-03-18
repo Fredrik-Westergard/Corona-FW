@@ -182,30 +182,11 @@ bool readToHashMap(table* t, int id){
     if(f != NULL){
         bool loop = true;
         while(loop){
-            unsigned int data;
-            date d;
-            char fullChar[17];
-            char dataChar[7];
-            char dateChar[11];
-            int read = fread(fullChar,sizeof(char),16,f);
-            
-            if(read > 0){
-                for(int i = 0; i < 6; i++){
-                    dataChar[i] = fullChar[i];
-                }
-                dataChar[6] = '\0';
-                for(int i = 6; i < 17; i++){
-                    dateChar[i-6] = fullChar[i];
-                }
-                dateChar[10] = '\0';
+            item* it = (item*) malloc(sizeof(item));
+            int read = fread(it, sizeof(item),1,f);
 
-                data = parseUser(dataChar);
-                if(data != -1){
-                    parseDate(&d, dateChar);
-                    if(checkDate(d)){
-                        addItem(t,d,data);
-                    }
-                }
+            if(read > 0){
+                addItem(t,it->d,it->data);
             }
             else{
                 loop = false;
@@ -231,9 +212,7 @@ bool writeHashMap(table* t, int id){
         for(int i = 0; i < SIZE; i++){
             item* it = t->items[i];
             while(it != NULL){
-                char buffer[17];
-                sprintf(buffer, "%u%04d-%02d-%02d",it->data, it->d.year, it->d.month, it->d.day);
-                fwrite(buffer,sizeof(char),16,f);
+                fwrite(it,sizeof(item),1,f);
                 it = it->next;
             }
         }
