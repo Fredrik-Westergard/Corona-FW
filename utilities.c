@@ -371,6 +371,9 @@ int checkArgs(int argc, const char* argv[]){
                     destroyHashMap(t);
                     exit(0);
                 }
+                else{
+                    printf("Error: Invalid input\n");
+                }
             }
             else if(argc == 4){
                 if(strcmp(argv[2], "sick") == 0){
@@ -384,6 +387,9 @@ int checkArgs(int argc, const char* argv[]){
                         destroyCodes(c);
                         destroyHashMap(t);
                     }
+                }
+                else{
+                    printf("Error: Invalid input\n");
                 }
                 exit(0);
             }
@@ -405,9 +411,13 @@ int checkArgs(int argc, const char* argv[]){
                     }
                     
                 }
+                else{
+                    printf("Error: Invalid input\n");
+                }
                 exit(0);
             }
             else{
+                printf("Error: Invalid input\n");
                 exit(0);
             }          
         }
