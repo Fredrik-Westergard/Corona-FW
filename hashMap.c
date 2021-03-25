@@ -191,6 +191,7 @@ bool readToHashMap(table* t, int id){
             else{
                 loop = false;
             }
+            free(it);
         }
         removeOld(t);
         fclose(f);
